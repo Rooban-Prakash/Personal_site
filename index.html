@@ -11,10 +11,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <style>
-    /* ===== CSS Custom Properties (Design Tokens) ===== */
     :root {
       --radius: 0.375rem;
       --background: oklch(0.16 0.012 265);
@@ -57,187 +56,39 @@
       --font-display: "Cormorant Garamond", Georgia, serif;
       --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
     }
-
-    /* ===== Base Styles ===== */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      border-color: var(--border);
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-      tab-size: 4;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--background);
-      color: var(--foreground);
-      font-family: var(--font-body);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    img, svg {
-      display: block;
-      max-width: 100%;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ===== Utility Classes ===== */
-    .font-display {
-      font-family: var(--font-display);
-    }
-
-    .font-body {
-      font-family: var(--font-body);
-    }
-
-    .text-accent-warm {
-      color: var(--accent-warm);
-    }
-
-    .text-muted-foreground {
-      color: var(--muted-foreground);
-    }
-
-    .text-foreground {
-      color: var(--foreground);
-    }
-
-    .bg-background {
-      background-color: var(--background);
-    }
-
-    .bg-card {
-      background-color: var(--card);
-    }
-
-    .bg-primary {
-      background-color: var(--primary);
-    }
-
-    .bg-border {
-      background-color: var(--border);
-    }
-
-    .border-border {
-      border-color: var(--border);
-    }
-
-    .uppercase {
-      text-transform: uppercase;
-    }
-
-    .tracking-wide {
-      letter-spacing: 0.025em;
-    }
-
-    /* ===== Animations ===== */
-    @keyframes web-sway {
-      0%, 100% { transform: rotate(-0.7deg) scale(1) translateY(0); }
-      33% { transform: rotate(0.5deg) scale(1.006) translateY(-3px); }
-      66% { transform: rotate(0.3deg) scale(0.997) translateY(2px); }
-    }
-
-    @keyframes strand-wobble {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(4px, -6px) rotate(0.9deg); }
-      50% { transform: translate(-5px, 4px) rotate(-1.1deg); }
-      75% { transform: translate(6px, 2px) rotate(0.5deg); }
-    }
-
-    @keyframes node-glow-pulse {
-      0%, 100% { opacity: 0.55; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.18); }
-    }
-
-    .web-sway {
-      transform-origin: 50% 50%;
-      transform-box: fill-box;
-      animation: web-sway 9s ease-in-out infinite;
-    }
-
-    .strand-wobble {
-      transform-origin: 50% 50%;
-      transform-box: fill-box;
-      animation: strand-wobble 6s ease-in-out infinite;
-      will-change: transform;
-    }
-
-    .node-glow {
-      transform-origin: center;
-      transform-box: fill-box;
-      animation: node-glow-pulse 4s ease-in-out infinite;
-      will-change: opacity, transform;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .web-sway,
-      .strand-wobble,
-      .node-glow {
-        animation: none;
-      }
-    }
-
-    /* ===== Ambient glow behind the web ===== */
-    .spider-web-container {
-      position: relative;
-    }
-
-    .spider-web-container::before {
-      content: "";
-      position: absolute;
-      inset: -12%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(
-        circle at 50% 42%,
-        oklch(0.55 0.13 84 / 0.55) 0%,
-        oklch(0.4 0.1 80 / 0.32) 22%,
-        oklch(0.28 0.05 75 / 0.14) 42%,
-        transparent 68%
-      );
-      filter: blur(6px);
-    }
-
-    .spider-web-container svg {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ===== Layout ===== */
-    .min-h-screen {
-      min-height: 100vh;
-    }
-
-    .overflow-hidden {
-      overflow: hidden;
-    }
-
-    .mx-auto {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .max-w-xl {
-      max-width: 36rem;
-    }
-
-    .max-w-2xl {
-      max-width: 42rem;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; border-color: var(--border); }
+    html { -webkit-text-size-adjust: 100%; tab-size: 4; }
+    body { margin: 0; padding: 0; background-color: var(--background); color: var(--foreground); font-family: var(--font-body); line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    .font-display { font-family: var(--font-display); }
+    .font-body { font-family: var(--font-body); }
+    .text-accent-warm { color: var(--accent-warm); }
+    .text-muted-foreground { color: var(--muted-foreground); }
+    .text-foreground { color: var(--foreground); }
+    .bg-background { background-color: var(--background); }
+    .bg-card { background-color: var(--card); }
+    .bg-primary { background-color: var(--primary); }
+    .bg-border { background-color: var(--border); }
+    .border-border { border-color: var(--border); }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wide { letter-spacing: 0.025em; }
+    @keyframes web-sway { 0%, 100% { transform: rotate(-0.7deg) scale(1) translateY(0); } 33% { transform: rotate(0.5deg) scale(1.006) translateY(-3px); } 66% { transform: rotate(0.3deg) scale(0.997) translateY(2px); } }
+    @keyframes strand-wobble { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(4px, -6px) rotate(0.9deg); } 50% { transform: translate(-5px, 4px) rotate(-1.1deg); } 75% { transform: translate(6px, 2px) rotate(0.5deg); } }
+    @keyframes node-glow-pulse { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.18); } }
+    .web-sway { transform-origin: 50% 50%; transform-box: fill-box; animation: web-sway 9s ease-in-out infinite; }
+    .strand-wobble { transform-origin: 50% 50%; transform-box: fill-box; animation: strand-wobble 6s ease-in-out infinite; will-change: transform; }
+    .node-glow { transform-origin: center; transform-box: fill-box; animation: node-glow-pulse 4s ease-in-out infinite; will-change: opacity, transform; }
+    @media (prefers-reduced-motion: reduce) { .web-sway, .strand-wobble, .node-glow { animation: none; } }
+    .spider-web-container { position: relative; }
+    .spider-web-container::before { content: ""; position: absolute; inset: -12%; z-index: 0; pointer-events: none; background: radial-gradient(circle at 50% 42%, oklch(0.55 0.13 84 / 0.55) 0%, oklch(0.4 0.1 80 / 0.32) 22%, oklch(0.28 0.05 75 / 0.14) 42%, transparent 68%); filter: blur(6px); }
+    .spider-web-container svg { position: relative; z-index: 1; }
+    .min-h-screen { min-height: 100vh; }
+    .overflow-hidden { overflow: hidden; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .max-w-xl { max-width: 36rem; }
+    .max-w-2xl { max-width: 42rem; }
+    .text-center { text-align: center; }
     .px-4 { padding-left: 1rem; padding-right: 1rem; }
     .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
     .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
@@ -258,89 +109,34 @@
     .gap-6 { gap: 1.5rem; }
     .gap-px { gap: 1px; }
     .space-y-6 > * + * { margin-top: 1.5rem; }
-
     .flex { display: flex; }
     .flex-wrap { flex-wrap: wrap; }
     .items-center { align-items: center; }
     .items-baseline { align-items: baseline; }
     .justify-between { justify-content: space-between; }
     .justify-center { justify-content: center; }
-
-    .grid {
-      display: grid;
-    }
-
+    .grid { display: grid; }
     .rounded-lg { border-radius: 0.5rem; }
     .rounded-full { border-radius: 9999px; }
     .rounded-md { border-radius: calc(var(--radius) - 2px); }
-
-    .border {
-      border-width: 1px;
-      border-style: solid;
-    }
-
-    .border-t {
-      border-top-width: 1px;
-      border-top-style: solid;
-    }
-
-    .border-b {
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
-    }
-
-    .transition-colors {
-      transition-property: color, background-color, border-color;
-      transition-duration: 150ms;
-    }
-
-    .transition-opacity {
-      transition-property: opacity;
-      transition-duration: 150ms;
-    }
-
-    .transition-all {
-      transition-property: all;
-      transition-duration: 150ms;
-    }
-
+    .border { border-width: 1px; border-style: solid; }
+    .border-t { border-top-width: 1px; border-top-style: solid; }
+    .border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+    .transition-colors { transition-property: color, background-color, border-color; transition-duration: 150ms; }
+    .transition-opacity { transition-property: opacity; transition-duration: 150ms; }
+    .transition-all { transition-property: all; transition-duration: 150ms; }
     .opacity-0 { opacity: 0; }
     .opacity-40 { opacity: 0.4; }
     .opacity-100 { opacity: 1; }
-
-    .hover\:text-accent-warm:hover {
-      color: var(--accent-warm);
-    }
-
-    .hover\:bg-card:hover {
-      background-color: var(--card);
-    }
-
-    .hover\:bg-primary\/90:hover {
-      /* approximate */
-      filter: brightness(0.9);
-    }
-
-    .hover\:bg-accent:hover {
-      background-color: var(--accent);
-    }
-
-    .hover\:border-accent-warm:hover {
-      border-color: var(--accent-warm);
-    }
-
-    .group:hover .group-hover\:text-accent-warm {
-      color: var(--accent-warm);
-    }
-
-    .group:hover .group-hover\:opacity-100 {
-      opacity: 1;
-    }
-
-    /* ===== Typography ===== */
+    .hover\:text-accent-warm:hover { color: var(--accent-warm); }
+    .hover\:bg-card:hover { background-color: var(--card); }
+    .hover\:bg-primary\/90:hover { filter: brightness(0.9); }
+    .hover\:bg-accent:hover { background-color: var(--accent); }
+    .hover\:border-accent-warm:hover { border-color: var(--accent-warm); }
+    .group:hover .group-hover\:text-accent-warm { color: var(--accent-warm); }
+    .group:hover .group-hover\:opacity-100 { opacity: 1; }
     h1 { margin: 0; }
     p { margin: 0; }
-
     .text-4xl { font-size: 2.25rem; }
     .text-5xl { font-size: 3rem; }
     .text-2xl { font-size: 1.5rem; }
@@ -349,762 +145,126 @@
     .text-base { font-size: 1rem; }
     .text-sm { font-size: 0.875rem; }
     .text-xs { font-size: 0.75rem; }
-
     .font-bold { font-weight: 700; }
     .font-semibold { font-weight: 600; }
     .font-medium { font-weight: 500; }
-
     .leading-relaxed { line-height: 1.625; }
     .leading-8 { line-height: 2rem; }
-
     .tracking-tight { letter-spacing: -0.025em; }
-
-    /* ===== SpiderWeb SVG ===== */
-    .spider-web-container {
-      width: 100%;
-      max-width: 720px;
-      margin: 0 auto;
-      touch-action: none;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .spider-web-container svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .spider-web-container svg .web-group {
-      transition: none;
-    }
-
-    .spider-web-container svg a {
-      cursor: pointer;
-    }
-
-    .spider-web-container svg circle[fill="transparent"] {
-      cursor: pointer;
-    }
-
-    /* ===== Navigation Grid ===== */
-    .nav-grid {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border);
-      background-color: var(--border);
-    }
-
-    @media (min-width: 640px) {
-      .nav-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .text-5xl { font-size: 3rem; }
-      .sm\:text-5xl { font-size: 3rem; }
-    }
-
-    .nav-grid a {
-      display: block;
-      padding: 1.25rem;
-      background-color: var(--background);
-      transition: background-color 150ms;
-    }
-
-    .nav-grid a:hover {
-      background-color: var(--card);
-    }
-
-    .nav-grid a .nav-title {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: color 150ms;
-    }
-
-    .nav-grid a:hover .nav-title {
-      color: var(--accent-warm);
-    }
-
-    .nav-grid a .nav-tagline {
-      display: block;
-      margin-top: 0.5rem;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      line-height: 1.625;
-      color: var(--muted-foreground);
-    }
-
-    /* ===== Branch Page ===== */
-    .back-link {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: var(--muted-foreground);
-      text-transform: uppercase;
-      transition: color 150ms;
-      cursor: pointer;
-    }
-
-    .back-link:hover {
-      color: var(--accent-warm);
-    }
-
-    .branch-tagline {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      color: var(--accent-warm);
-      text-transform: uppercase;
-    }
-
-    .branch-title {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      letter-spacing: -0.025em;
-    }
-
-    .branch-blurb {
-      font-family: var(--font-body);
-      font-size: 1.125rem;
-      line-height: 1.625;
-      color: var(--muted-foreground);
-    }
-
-    .leaf-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .leaf-list li {
-      border-bottom: 1px solid var(--border);
-    }
-
-    .leaf-list a {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      cursor: pointer;
-    }
-
-    .leaf-list .leaf-title {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      transition: color 150ms;
-    }
-
-    .leaf-list a:hover .leaf-title {
-      color: var(--accent-warm);
-    }
-
-    .leaf-list .leaf-blurb {
-      display: block;
-      margin-top: 0.25rem;
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      color: var(--muted-foreground);
-    }
-
-    .leaf-list .leaf-arrow {
-      font-family: var(--font-body);
-      color: var(--accent-warm);
-      opacity: 0;
-      transition: opacity 150ms;
-    }
-
-    .leaf-list a:hover .leaf-arrow {
-      opacity: 1;
-    }
-
-    /* ===== Leaf Page ===== */
-    .breadcrumb {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: var(--muted-foreground);
-      text-transform: uppercase;
-    }
-
-    .breadcrumb a {
-      cursor: pointer;
-      transition: color 150ms;
-    }
-
-    .breadcrumb a:hover {
-      color: var(--accent-warm);
-    }
-
-    .breadcrumb span.sep {
-      color: var(--muted-foreground);
-    }
-
-    .leaf-page-title {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      letter-spacing: -0.025em;
-    }
-
-    .leaf-page-blurb {
-      font-family: var(--font-body);
-      font-size: 1.125rem;
-      color: var(--accent-warm);
-    }
-
-    .leaf-body p {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      line-height: 2rem;
-      color: var(--muted-foreground);
-    }
-
-    .leaf-html-block {
-      margin: 1.5rem 0;
-    }
-
-    .leaf-html-block img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border);
-    }
-
-    .leaf-html-block iframe {
-      max-width: 100%;
-      border-radius: 0.5rem;
-      border: 1px solid var(--border);
-    }
-
-    .nearby-label {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: var(--muted-foreground);
-      text-transform: uppercase;
-    }
-
-    .nearby-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .nearby-pill {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      font-family: var(--font-body);
-      font-size: 0.875rem;
-      cursor: pointer;
-      transition: border-color 150ms, color 150ms;
-    }
-
-    .nearby-pill:hover {
-      border-color: var(--accent-warm);
-      color: var(--accent-warm);
-    }
-
-    /* ===== 404 Page ===== */
-    .not-found-page {
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--background);
-      padding: 1rem;
-    }
-
-    .not-found-card {
-      max-width: 28rem;
-      text-align: center;
-    }
-
-    .not-found-card h1 {
-      font-size: 4.5rem;
-      font-weight: 700;
-      color: var(--foreground);
-    }
-
-    .not-found-card h2 {
-      margin-top: 1rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--foreground);
-    }
-
-    .not-found-card p {
-      margin-top: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted-foreground);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 1rem;
-      border-radius: calc(var(--radius) - 2px);
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      font-family: var(--font-body);
-      transition: background-color 150ms;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: var(--primary-foreground);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(0.9);
-    }
-
-    .btn-outline {
-      background-color: var(--background);
-      color: var(--foreground);
-      border: 1px solid var(--input);
-    }
-
-    .btn-outline:hover {
-      background-color: var(--accent);
-    }
-
-    /* ===== Error Page ===== */
-    .error-page {
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--background);
-      padding: 1rem;
-    }
-
-    .error-card {
-      max-width: 28rem;
-      text-align: center;
-    }
-
-    .error-card h1 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      color: var(--foreground);
-    }
-
-    .error-card p {
-      margin-top: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted-foreground);
-    }
-
-    .error-actions {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    /* ===== Admin link (home footer) ===== */
-    .admin-link {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted-foreground);
-      opacity: 0.5;
-      transition: opacity 150ms, color 150ms;
-    }
-
-    .admin-link:hover {
-      opacity: 1;
-      color: var(--accent-warm);
-    }
-
-    /* ===== Admin Page ===== */
-    .admin-title {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      letter-spacing: -0.025em;
-    }
-
-    .admin-sub {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      line-height: 1.625;
-      color: var(--muted-foreground);
-      max-width: 34rem;
-    }
-
-    /* --- Sticky save bar --- */
-    .admin-bar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      margin: 1.5rem 0 0;
-      padding: 1rem;
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      background-color: var(--card);
-      backdrop-filter: blur(6px);
-    }
-
-    .admin-bar-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .admin-bar-row + .admin-bar-row {
-      margin-top: 0.5rem;
-    }
-
-    .file-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 9999px;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      border: 1px solid var(--border);
-      color: var(--muted-foreground);
-    }
-
-    .file-pill-connected {
-      border-color: var(--accent-warm);
-      color: var(--accent-warm);
-    }
-
-    .save-status {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      color: var(--muted-foreground);
-      min-height: 1.2em;
-    }
-
-    .save-status-dirty {
-      color: var(--accent-warm);
-    }
-
-    .save-status-clean {
-      color: var(--muted-foreground);
-    }
-
-    /* --- Branch / leaf accordions --- */
-    .admin-branch-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .admin-branch {
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      background-color: var(--card);
-      overflow: hidden;
-    }
-
-    .admin-branch-summary {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1.1rem 1.25rem;
-      cursor: pointer;
-      list-style: none;
-      font-family: var(--font-display);
-    }
-
-    .admin-branch-summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .admin-branch-summary::before {
-      content: "▸";
-      display: inline-block;
-      margin-right: 0.6rem;
-      color: var(--accent-warm);
-      transition: transform 150ms;
-      font-family: var(--font-body);
-    }
-
-    .admin-branch[open] > .admin-branch-summary::before {
-      transform: rotate(90deg);
-    }
-
-    .admin-branch-summary-title {
-      font-size: 1.25rem;
-      flex: 1;
-    }
-
-    .admin-branch-summary-meta {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted-foreground);
-      white-space: nowrap;
-    }
-
-    .admin-branch-body {
-      padding: 0 1.25rem 1.5rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.25rem;
-    }
-
-    .admin-subhead {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted-foreground);
-      margin: 1.75rem 0 0.75rem;
-    }
-
-    .admin-leaf-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-
-    .admin-leaf {
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) - 2px);
-      background-color: var(--background);
-      overflow: hidden;
-    }
-
-    .admin-leaf-summary {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      list-style: none;
-      font-family: var(--font-body);
-    }
-
-    .admin-leaf-summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .admin-leaf-summary::before {
-      content: "▸";
-      display: inline-block;
-      margin-right: 0.5rem;
-      color: var(--muted-foreground);
-      transition: transform 150ms;
-    }
-
-    .admin-leaf[open] > .admin-leaf-summary::before {
-      transform: rotate(90deg);
-    }
-
-    .admin-leaf-summary-title {
-      font-size: 0.9375rem;
-      color: var(--foreground);
-      flex: 1;
-    }
-
-    .admin-leaf-summary-slug {
-      font-size: 0.75rem;
-      color: var(--muted-foreground);
-      white-space: nowrap;
-    }
-
-    .admin-leaf-body {
-      padding: 0.25rem 1rem 1.25rem;
-      border-top: 1px solid var(--border);
-    }
-
-    /* --- Fields --- */
-    .admin-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .admin-block {
-      display: block;
-      margin-bottom: 0.75rem;
-    }
-
-    .admin-page label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted-foreground);
-    }
-
-    .admin-page input[type="text"],
-    .admin-page textarea {
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
-      text-transform: none;
-      letter-spacing: normal;
-      color: var(--foreground);
-      background-color: var(--card);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) - 2px);
-      padding: 0.5rem 0.65rem;
-      width: 100%;
-    }
-
-    .admin-page input[type="text"]:focus,
-    .admin-page textarea:focus {
-      outline: none;
-      border-color: var(--accent-warm);
-    }
-
-    .admin-page textarea {
-      resize: vertical;
-      line-height: 1.5;
-      font-size: 0.875rem;
-    }
-
-    .admin-image-row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin: 0.5rem 0 1rem;
-    }
-
-    .admin-file-btn {
-      display: inline-flex !important;
-      flex-direction: row !important;
-      text-transform: none !important;
-      letter-spacing: normal !important;
-      font-size: 0.8125rem !important;
-    }
-
-    .admin-hint-inline {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      color: var(--muted-foreground);
-      max-width: 26rem;
-    }
-
-    .admin-hint-inline code {
-      font-size: 0.75rem;
-    }
-
-    /* --- Buttons --- */
-    .admin-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 1rem;
-      border-radius: calc(var(--radius) - 2px);
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background-color: var(--background);
-      color: var(--foreground);
-      transition: border-color 150ms, color 150ms, background-color 150ms;
-      margin-right: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .admin-btn:hover {
-      border-color: var(--accent-warm);
-      color: var(--accent-warm);
-    }
-
-    .admin-btn-primary {
-      background-color: var(--primary);
-      color: var(--primary-foreground);
-      border-color: var(--primary);
-    }
-
-    .admin-btn-primary:hover {
-      filter: brightness(0.92);
-      color: var(--primary-foreground);
-    }
-
-    .admin-btn-ghost {
-      background-color: transparent;
-    }
-
-    .admin-btn-danger {
-      border-color: var(--border);
-      color: var(--destructive);
-    }
-
-    .admin-btn-danger:hover {
-      border-color: var(--destructive);
-      color: var(--destructive);
-    }
-
-    .admin-btn-remove-branch {
-      float: right;
-    }
-
-    @media (max-width: 640px) {
-      .admin-row {
-        grid-template-columns: 1fr;
-      }
-      .admin-btn-remove-branch {
-        float: none;
-        display: block;
-      }
-    }
-
-    /* ===== Hidden ===== */
-    .hidden {
-      display: none !important;
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 640px) {
-      .branch-title,
-      .leaf-page-title {
-        font-size: 2.25rem;
-      }
-      .text-5xl {
-        font-size: 2.25rem;
-      }
-    }
+    .spider-web-container { width: 100%; max-width: 720px; margin: 0 auto; touch-action: none; user-select: none; -webkit-user-select: none; }
+    .spider-web-container svg { width: 100%; height: auto; display: block; }
+    .spider-web-container svg .web-group { transition: none; }
+    .spider-web-container svg a { cursor: pointer; }
+    .spider-web-container svg circle[fill="transparent"] { cursor: pointer; }
+    .nav-grid { display: grid; gap: 1px; overflow: hidden; border-radius: 0.5rem; border: 1px solid var(--border); background-color: var(--border); }
+    @media (min-width: 640px) { .nav-grid { grid-template-columns: repeat(3, 1fr); } .text-5xl { font-size: 3rem; } .sm\:text-5xl { font-size: 3rem; } }
+    .nav-grid a { display: block; padding: 1.25rem; background-color: var(--background); transition: background-color 150ms; }
+    .nav-grid a:hover { background-color: var(--card); }
+    .nav-grid a .nav-title { font-family: var(--font-display); font-size: 1.125rem; letter-spacing: 0.2em; text-transform: uppercase; transition: color 150ms; }
+    .nav-grid a:hover .nav-title { color: var(--accent-warm); }
+    .nav-grid a .nav-tagline { display: block; margin-top: 0.5rem; font-family: var(--font-body); font-size: 0.75rem; line-height: 1.625; color: var(--muted-foreground); }
+    .back-link { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--muted-foreground); text-transform: uppercase; transition: color 150ms; cursor: pointer; }
+    .back-link:hover { color: var(--accent-warm); }
+    .branch-tagline { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.35em; color: var(--accent-warm); text-transform: uppercase; }
+    .branch-title { font-family: var(--font-display); font-size: 3rem; letter-spacing: -0.025em; }
+    .branch-blurb { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.625; color: var(--muted-foreground); }
+    .leaf-list { list-style: none; margin: 0; padding: 0; }
+    .leaf-list li { border-bottom: 1px solid var(--border); }
+    .leaf-list a { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 0; cursor: pointer; }
+    .leaf-list .leaf-title { font-family: var(--font-display); font-size: 1.5rem; transition: color 150ms; }
+    .leaf-list a:hover .leaf-title { color: var(--accent-warm); }
+    .leaf-list .leaf-blurb { display: block; margin-top: 0.25rem; font-family: var(--font-body); font-size: 0.875rem; color: var(--muted-foreground); }
+    .leaf-list .leaf-arrow { font-family: var(--font-body); color: var(--accent-warm); opacity: 0; transition: opacity 150ms; }
+    .leaf-list a:hover .leaf-arrow { opacity: 1; }
+    .breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--muted-foreground); text-transform: uppercase; }
+    .breadcrumb a { cursor: pointer; transition: color 150ms; }
+    .breadcrumb a:hover { color: var(--accent-warm); }
+    .breadcrumb span.sep { color: var(--muted-foreground); }
+    .leaf-page-title { font-family: var(--font-display); font-size: 3rem; letter-spacing: -0.025em; }
+    .leaf-page-blurb { font-family: var(--font-body); font-size: 1.125rem; color: var(--accent-warm); }
+    .leaf-body p { font-family: var(--font-body); font-size: 1rem; line-height: 2rem; color: var(--muted-foreground); }
+    .leaf-html-block { margin: 1.5rem 0; }
+    .leaf-html-block img { max-width: 100%; height: auto; display: block; border-radius: 0.5rem; border: 1px solid var(--border); }
+    .leaf-html-block iframe { max-width: 100%; border-radius: 0.5rem; border: 1px solid var(--border); }
+    .nearby-label { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.3em; color: var(--muted-foreground); text-transform: uppercase; }
+    .nearby-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .nearby-pill { display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 9999px; font-family: var(--font-body); font-size: 0.875rem; cursor: pointer; transition: border-color 150ms, color 150ms; }
+    .nearby-pill:hover { border-color: var(--accent-warm); color: var(--accent-warm); }
+    .not-found-page { display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: var(--background); padding: 1rem; }
+    .not-found-card { max-width: 28rem; text-align: center; }
+    .not-found-card h1 { font-size: 4.5rem; font-weight: 700; color: var(--foreground); }
+    .not-found-card h2 { margin-top: 1rem; font-size: 1.25rem; font-weight: 600; color: var(--foreground); }
+    .not-found-card p { margin-top: 0.5rem; font-size: 0.875rem; color: var(--muted-foreground); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: calc(var(--radius) - 2px); font-size: 0.875rem; font-weight: 500; cursor: pointer; border: none; font-family: var(--font-body); transition: background-color 150ms; }
+    .btn-primary { background-color: var(--primary); color: var(--primary-foreground); }
+    .btn-primary:hover { filter: brightness(0.9); }
+    .btn-outline { background-color: var(--background); color: var(--foreground); border: 1px solid var(--input); }
+    .btn-outline:hover { background-color: var(--accent); }
+    .error-page { display: flex; min-height: 100vh; align-items: center; justify-content: center; background-color: var(--background); padding: 1rem; }
+    .error-card { max-width: 28rem; text-align: center; }
+    .error-card h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.025em; color: var(--foreground); }
+    .error-card p { margin-top: 0.5rem; font-size: 0.875rem; color: var(--muted-foreground); }
+    .error-actions { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+    .admin-link { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted-foreground); opacity: 0.5; transition: opacity 150ms, color 150ms; }
+    .admin-link:hover { opacity: 1; color: var(--accent-warm); }
+    .admin-title { font-family: var(--font-display); font-size: 3rem; letter-spacing: -0.025em; }
+    .admin-sub { font-family: var(--font-body); font-size: 1rem; line-height: 1.625; color: var(--muted-foreground); max-width: 34rem; }
+    .admin-bar { position: sticky; top: 0; z-index: 10; margin: 1.5rem 0 0; padding: 1rem; border: 1px solid var(--border); border-radius: 0.5rem; background-color: var(--card); backdrop-filter: blur(6px); }
+    .admin-bar-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    .admin-bar-row + .admin-bar-row { margin-top: 0.5rem; }
+    .file-pill { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; border-radius: 9999px; font-family: var(--font-body); font-size: 0.8125rem; border: 1px solid var(--border); color: var(--muted-foreground); }
+    .file-pill-connected { border-color: var(--accent-warm); color: var(--accent-warm); }
+    .save-status { font-family: var(--font-body); font-size: 0.8125rem; color: var(--muted-foreground); min-height: 1.2em; }
+    .save-status-dirty { color: var(--accent-warm); }
+    .save-status-clean { color: var(--muted-foreground); }
+    .admin-branch-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .admin-branch { border: 1px solid var(--border); border-radius: 0.5rem; background-color: var(--card); overflow: hidden; }
+    .admin-branch-summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem; cursor: pointer; list-style: none; font-family: var(--font-display); }
+    .admin-branch-summary::-webkit-details-marker { display: none; }
+    .admin-branch-summary::before { content: "▸"; display: inline-block; margin-right: 0.6rem; color: var(--accent-warm); transition: transform 150ms; font-family: var(--font-body); }
+    .admin-branch[open] > .admin-branch-summary::before { transform: rotate(90deg); }
+    .admin-branch-summary-title { font-size: 1.25rem; flex: 1; }
+    .admin-branch-summary-meta { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-foreground); white-space: nowrap; }
+    .admin-branch-body { padding: 0 1.25rem 1.5rem; border-top: 1px solid var(--border); padding-top: 1.25rem; }
+    .admin-subhead { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-foreground); margin: 1.75rem 0 0.75rem; }
+    .admin-leaf-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+    .admin-leaf { border: 1px solid var(--border); border-radius: calc(var(--radius) - 2px); background-color: var(--background); overflow: hidden; }
+    .admin-leaf-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; cursor: pointer; list-style: none; font-family: var(--font-body); }
+    .admin-leaf-summary::-webkit-details-marker { display: none; }
+    .admin-leaf-summary::before { content: "▸"; display: inline-block; margin-right: 0.5rem; color: var(--muted-foreground); transition: transform 150ms; }
+    .admin-leaf[open] > .admin-leaf-summary::before { transform: rotate(90deg); }
+    .admin-leaf-summary-title { font-size: 0.9375rem; color: var(--foreground); flex: 1; }
+    .admin-leaf-summary-slug { font-size: 0.75rem; color: var(--muted-foreground); white-space: nowrap; }
+    .admin-leaf-body { padding: 0.25rem 1rem 1.25rem; border-top: 1px solid var(--border); }
+    .admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; margin-top: 1rem; }
+    .admin-block { display: block; margin-bottom: 0.75rem; }
+    .admin-page label { display: flex; flex-direction: column; gap: 0.35rem; font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted-foreground); }
+    .admin-page input[type="text"], .admin-page textarea { font-family: var(--font-body); font-size: 0.9375rem; text-transform: none; letter-spacing: normal; color: var(--foreground); background-color: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) - 2px); padding: 0.5rem 0.65rem; width: 100%; }
+    .admin-page input[type="text"]:focus, .admin-page textarea:focus { outline: none; border-color: var(--accent-warm); }
+    .admin-page textarea { resize: vertical; line-height: 1.5; font-size: 0.875rem; }
+    .admin-image-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 0.5rem 0 1rem; }
+    .admin-file-btn { display: inline-flex !important; flex-direction: row !important; text-transform: none !important; letter-spacing: normal !important; font-size: 0.8125rem !important; }
+    .admin-hint-inline { font-family: var(--font-body); font-size: 0.75rem; color: var(--muted-foreground); max-width: 26rem; }
+    .admin-hint-inline code { font-size: 0.75rem; }
+    .admin-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: calc(var(--radius) - 2px); font-family: var(--font-body); font-size: 0.8125rem; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background-color: var(--background); color: var(--foreground); transition: border-color 150ms, color 150ms, background-color 150ms; margin-right: 0.5rem; margin-top: 0.5rem; }
+    .admin-btn:hover { border-color: var(--accent-warm); color: var(--accent-warm); }
+    .admin-btn-primary { background-color: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+    .admin-btn-primary:hover { filter: brightness(0.92); color: var(--primary-foreground); }
+    .admin-btn-ghost { background-color: transparent; }
+    .admin-btn-danger { border-color: var(--border); color: var(--destructive); }
+    .admin-btn-danger:hover { border-color: var(--destructive); color: var(--destructive); }
+    .admin-btn-remove-branch { float: right; }
+    @media (max-width: 640px) { .admin-row { grid-template-columns: 1fr; } .admin-btn-remove-branch { float: none; display: block; } }
+    .hidden { display: none !important; }
+    @media (max-width: 640px) { .branch-title, .leaf-page-title { font-size: 2.25rem; } .text-5xl { font-size: 2.25rem; } }
   </style>
 </head>
 <body>
-  <!-- App root: pages are rendered here by the router -->
-  <div id="app"><main class="min-h-screen px-6 py-16 admin-page"><div class="mx-auto max-w-2xl"><a onclick="navigate('/')" class="back-link">← back to the web</a><h1 class="mt-6 admin-title">Admin</h1><p class="mt-2 admin-sub">Edit branches and pages below. Connect your index.html file once, then "Save changes" writes straight to it — no downloads.</p><div class="admin-bar"><div class="admin-bar-row"><span class="file-pill file-pill-connected">📄 index_2.html</span><button type="button" class="admin-btn admin-btn-primary" onclick="saveChanges()">💾 Save changes</button><button type="button" class="admin-btn admin-btn-ghost" onclick="disconnectFile()">Disconnect</button></div><div class="admin-bar-row"><span id="save-status" class="save-status save-status-dirty">Unsaved changes</span></div></div><div class="mt-8 admin-branch-list"><details class="admin-branch" open=""><summary class="admin-branch-summary"><span class="admin-branch-summary-title">Blog</span><span class="admin-branch-summary-meta">3 pages</span></summary><div class="admin-branch-body"><div class="admin-row"><label>Title<input type="text" value="Blog" oninput="updateBranchField(0,'title',this.value)"></label><label>URL slug<input type="text" value="blog" oninput="updateBranchField(0,'slug',this.value)"></label></div><label class="admin-block">Tagline (shown on the web graphic)<input type="text" value="Words caught in the silk" oninput="updateBranchField(0,'tagline',this.value)"></label><label class="admin-block">Blurb (shown on the branch page)<input type="text" value="Longer thinking — essays, notes and half-finished arguments that needed somewhere to sit." oninput="updateBranchField(0,'blurb',this.value)"></label><h3 class="admin-subhead">Pages in this branch</h3><div class="admin-leaf-list"><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Essays</span><span class="admin-leaf-summary-slug">/blog/essays</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Essays" oninput="updateLeafField(0,0,'title',this.value)"></label><label>URL slug<input type="text" value="essays" oninput="updateLeafField(0,0,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Slow pieces on attention, craft and taste." oninput="updateLeafField(0,0,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-0-0" rows="5" oninput="updateLeafBody(0,0,this.value)">Essays are the widest strands of this web. They start as a single question and get pulled outward until the shape holds.
-Recent threads: what makes a tool feel honest, why constraint beats capability, and the quiet cost of always shipping.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,0,0)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(0,0)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Notes</span><span class="admin-leaf-summary-slug">/blog/notes</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Notes" oninput="updateLeafField(0,1,'title',this.value)"></label><label>URL slug<input type="text" value="notes" oninput="updateLeafField(0,1,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Short captures, unpolished on purpose." oninput="updateLeafField(0,1,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-0-1" rows="5" oninput="updateLeafBody(0,1,this.value)">Notes are the sticky bits — one paragraph, one idea, no obligation to conclude.
-Most of them never grow up into essays, and that is entirely the point.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,0,1)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(0,1)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Reading</span><span class="admin-leaf-summary-slug">/blog/reading</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Reading" oninput="updateLeafField(0,2,'title',this.value)"></label><label>URL slug<input type="text" value="reading" oninput="updateLeafField(0,2,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="What the web caught this month." oninput="updateLeafField(0,2,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-0-2" rows="5" oninput="updateLeafBody(0,2,this.value)">A running log of books, papers and long articles, with the one line that made each worth keeping.
-Fiction and systems writing get equal weight here.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,0,2)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(0,2)">Remove page</button></div></details></div><button type="button" class="admin-btn" onclick="addLeaf(0)">+ Add page</button><button type="button" class="admin-btn admin-btn-danger admin-btn-remove-branch" onclick="removeBranch(0)">Remove branch</button></div></details><details class="admin-branch"><summary class="admin-branch-summary"><span class="admin-branch-summary-title">Tech</span><span class="admin-branch-summary-meta">3 pages</span></summary><div class="admin-branch-body"><div class="admin-row"><label>Title<input type="text" value="Tech" oninput="updateBranchField(1,'title',this.value)"></label><label>URL slug<input type="text" value="tech" oninput="updateBranchField(1,'slug',this.value)"></label></div><label class="admin-block">Tagline (shown on the web graphic)<input type="text" value="Structure, load-bearing" oninput="updateBranchField(1,'tagline',this.value)"></label><label class="admin-block">Blurb (shown on the branch page)<input type="text" value="The engineering strands — what I build, how it is put together, and what broke along the way." oninput="updateBranchField(1,'blurb',this.value)"></label><h3 class="admin-subhead">Pages in this branch</h3><div class="admin-leaf-list"><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Projects</span><span class="admin-leaf-summary-slug">/tech/projects</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Projects" oninput="updateLeafField(1,0,'title',this.value)"></label><label>URL slug<input type="text" value="projects" oninput="updateLeafField(1,0,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Things built and shipped." oninput="updateLeafField(1,0,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-1-0" rows="5" oninput="updateLeafBody(1,0,this.value)">Side projects, tools and experiments, each with the problem it was trying to solve.
-Some are alive, some are archived, all of them taught something.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,1,0)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(1,0)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Systems</span><span class="admin-leaf-summary-slug">/tech/systems</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Systems" oninput="updateLeafField(1,1,'title',this.value)"></label><label>URL slug<input type="text" value="systems" oninput="updateLeafField(1,1,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Architecture, data flow, tradeoffs." oninput="updateLeafField(1,1,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-1-1" rows="5" oninput="updateLeafBody(1,1,this.value)">How the pieces connect: queues, caches, boundaries, and the places where complexity likes to hide.
-Diagrams first, prose second.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,1,1)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(1,1)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Snippets</span><span class="admin-leaf-summary-slug">/tech/snippets</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Snippets" oninput="updateLeafField(1,2,'title',this.value)"></label><label>URL slug<input type="text" value="snippets" oninput="updateLeafField(1,2,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Small code that earns its keep." oninput="updateLeafField(1,2,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-1-2" rows="5" oninput="updateLeafBody(1,2,this.value)">Utilities, one-liners and patterns I keep re-typing until I finally wrote them down.
-Copy freely.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,1,2)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(1,2)">Remove page</button></div></details></div><button type="button" class="admin-btn" onclick="addLeaf(1)">+ Add page</button><button type="button" class="admin-btn admin-btn-danger admin-btn-remove-branch" onclick="removeBranch(1)">Remove branch</button></div></details><details class="admin-branch"><summary class="admin-branch-summary"><span class="admin-branch-summary-title">Life</span><span class="admin-branch-summary-meta">3 pages</span></summary><div class="admin-branch-body"><div class="admin-row"><label>Title<input type="text" value="Life" oninput="updateBranchField(2,'title',this.value)"></label><label>URL slug<input type="text" value="life" oninput="updateBranchField(2,'slug',this.value)"></label></div><label class="admin-block">Tagline (shown on the web graphic)<input type="text" value="The soft anchor lines" oninput="updateBranchField(2,'tagline',this.value)"></label><label class="admin-block">Blurb (shown on the branch page)<input type="text" value="Everything outside the screen — travel, habits, people, and the ordinary days between." oninput="updateBranchField(2,'blurb',this.value)"></label><h3 class="admin-subhead">Pages in this branch</h3><div class="admin-leaf-list"><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Travel</span><span class="admin-leaf-summary-slug">/life/travel</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Travel" oninput="updateLeafField(2,0,'title',this.value)"></label><label>URL slug<input type="text" value="travel" oninput="updateLeafField(2,0,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Places, and how they changed the pace." oninput="updateLeafField(2,0,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-2-0" rows="5" oninput="updateLeafBody(2,0,this.value)">Notes from roads, coastlines and unremarkable towns that turned out to be the good part.
-Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,2,0)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(2,0)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">Habits</span><span class="admin-leaf-summary-slug">/life/habits</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="Habits" oninput="updateLeafField(2,1,'title',this.value)"></label><label>URL slug<input type="text" value="habits" oninput="updateLeafField(2,1,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Small systems for ordinary days." oninput="updateLeafField(2,1,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-2-1" rows="5" oninput="updateLeafBody(2,1,this.value)">Sleep, walking, writing at the same hour. Nothing clever — just repetition that survives bad weeks.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,2,1)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(2,1)">Remove page</button></div></details><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">People</span><span class="admin-leaf-summary-slug">/life/people</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="People" oninput="updateLeafField(2,2,'title',this.value)"></label><label>URL slug<input type="text" value="people" oninput="updateLeafField(2,2,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Conversations worth keeping." oninput="updateLeafField(2,2,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-2-2" rows="5" oninput="updateLeafBody(2,2,this.value)">The friends, mentors and strangers whose sentences stuck around longer than they should have.</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,2,2)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(2,2)">Remove page</button></div></details></div><button type="button" class="admin-btn" onclick="addLeaf(2)">+ Add page</button><button type="button" class="admin-btn admin-btn-danger admin-btn-remove-branch" onclick="removeBranch(2)">Remove branch</button></div></details><details class="admin-branch"><summary class="admin-branch-summary"><span class="admin-branch-summary-title">Laptop</span><span class="admin-branch-summary-meta">1 page</span></summary><div class="admin-branch-body"><div class="admin-row"><label>Title<input type="text" value="Laptop" oninput="updateBranchField(3,'title',this.value)"></label><label>URL slug<input type="text" value="asus-tuf" oninput="updateBranchField(3,'slug',this.value)"></label></div><label class="admin-block">Tagline (shown on the web graphic)<input type="text" value="This is the new page for the new branch" oninput="updateBranchField(3,'tagline',this.value)"></label><label class="admin-block">Blurb (shown on the branch page)<input type="text" value="the same Laptop page" oninput="updateBranchField(3,'blurb',this.value)"></label><h3 class="admin-subhead">Pages in this branch</h3><div class="admin-leaf-list"><details class="admin-leaf"><summary class="admin-leaf-summary"><span class="admin-leaf-summary-title">New keyboard</span><span class="admin-leaf-summary-slug">/asus-tuf/keyboard</span></summary><div class="admin-leaf-body"><div class="admin-row"><label>Title<input type="text" value="New keyboard" oninput="updateLeafField(3,0,'title',this.value)"></label><label>URL slug<input type="text" value="keyboard" oninput="updateLeafField(3,0,'slug',this.value)"></label></div><label class="admin-block">Short blurb (shown in list)<input type="text" value="Look at my new keyboard" oninput="updateLeafField(3,0,'blurb',this.value)"></label><label class="admin-block">Body (one paragraph per line)<textarea id="leaf-body-3-0" rows="5" oninput="updateLeafBody(3,0,this.value)">&lt;h1&gt;Look at my new keyboard&lt;/h1&gt;</textarea></label><div class="admin-image-row"><label class="admin-btn admin-file-btn">🖼 Insert image<input type="file" accept="image/*" style="display:none" onchange="insertImageIntoBody(event,3,0)"></label><span class="admin-hint-inline">Embeds the picture right into the file (no external hosting needed). You can also paste raw HTML — like a <code>&lt;img&gt;</code> or <code>&lt;iframe&gt;</code> tag — on its own line in the body above.</span></div><button type="button" class="admin-btn admin-btn-danger" onclick="removeLeaf(3,0)">Remove page</button></div></details></div><button type="button" class="admin-btn" onclick="addLeaf(3)">+ Add page</button><button type="button" class="admin-btn admin-btn-danger admin-btn-remove-branch" onclick="removeBranch(3)">Remove branch</button></div></details></div><button type="button" class="admin-btn admin-btn-primary mt-6" onclick="addBranch()">+ Add branch</button></div></main></div>
+  <div id="app"></div>
 
   <script>
     // =========================================================================
-    // DATA LAYER — mirrors src/lib/web-data.ts
+    // DATA LAYER
     // =========================================================================
 
     const CENTER = {
@@ -1120,33 +280,21 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     "tagline": "Words caught in the silk",
     "blurb": "Longer thinking — essays, notes and half-finished arguments that needed somewhere to sit.",
     "leaves": [
-      {
-        "slug": "essays",
-        "title": "Essays",
-        "blurb": "Slow pieces on attention, craft and taste.",
+      { "slug": "essays", "title": "Essays", "blurb": "Slow pieces on attention, craft and taste.",
         "body": [
           "Essays are the widest strands of this web. They start as a single question and get pulled outward until the shape holds.",
           "Recent threads: what makes a tool feel honest, why constraint beats capability, and the quiet cost of always shipping."
-        ]
-      },
-      {
-        "slug": "notes",
-        "title": "Notes",
-        "blurb": "Short captures, unpolished on purpose.",
+        ] },
+      { "slug": "notes", "title": "Notes", "blurb": "Short captures, unpolished on purpose.",
         "body": [
           "Notes are the sticky bits — one paragraph, one idea, no obligation to conclude.",
           "Most of them never grow up into essays, and that is entirely the point."
-        ]
-      },
-      {
-        "slug": "reading",
-        "title": "Reading",
-        "blurb": "What the web caught this month.",
+        ] },
+      { "slug": "reading", "title": "Reading", "blurb": "What the web caught this month.",
         "body": [
           "A running log of books, papers and long articles, with the one line that made each worth keeping.",
           "Fiction and systems writing get equal weight here."
-        ]
-      }
+        ] }
     ]
   },
   {
@@ -1155,33 +303,21 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     "tagline": "Structure, load-bearing",
     "blurb": "The engineering strands — what I build, how it is put together, and what broke along the way.",
     "leaves": [
-      {
-        "slug": "projects",
-        "title": "Projects",
-        "blurb": "Things built and shipped.",
+      { "slug": "projects", "title": "Projects", "blurb": "Things built and shipped.",
         "body": [
           "Side projects, tools and experiments, each with the problem it was trying to solve.",
           "Some are alive, some are archived, all of them taught something."
-        ]
-      },
-      {
-        "slug": "systems",
-        "title": "Systems",
-        "blurb": "Architecture, data flow, tradeoffs.",
+        ] },
+      { "slug": "systems", "title": "Systems", "blurb": "Architecture, data flow, tradeoffs.",
         "body": [
           "How the pieces connect: queues, caches, boundaries, and the places where complexity likes to hide.",
           "Diagrams first, prose second."
-        ]
-      },
-      {
-        "slug": "snippets",
-        "title": "Snippets",
-        "blurb": "Small code that earns its keep.",
+        ] },
+      { "slug": "snippets", "title": "Snippets", "blurb": "Small code that earns its keep.",
         "body": [
           "Utilities, one-liners and patterns I keep re-typing until I finally wrote them down.",
           "Copy freely."
-        ]
-      }
+        ] }
     ]
   },
   {
@@ -1190,31 +326,19 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     "tagline": "The soft anchor lines",
     "blurb": "Everything outside the screen — travel, habits, people, and the ordinary days between.",
     "leaves": [
-      {
-        "slug": "travel",
-        "title": "Travel",
-        "blurb": "Places, and how they changed the pace.",
+      { "slug": "travel", "title": "Travel", "blurb": "Places, and how they changed the pace.",
         "body": [
           "Notes from roads, coastlines and unremarkable towns that turned out to be the good part.",
           "Less itinerary, more atmosphere."
-        ]
-      },
-      {
-        "slug": "habits",
-        "title": "Habits",
-        "blurb": "Small systems for ordinary days.",
+        ] },
+      { "slug": "habits", "title": "Habits", "blurb": "Small systems for ordinary days.",
         "body": [
           "Sleep, walking, writing at the same hour. Nothing clever — just repetition that survives bad weeks."
-        ]
-      },
-      {
-        "slug": "people",
-        "title": "People",
-        "blurb": "Conversations worth keeping.",
+        ] },
+      { "slug": "people", "title": "People", "blurb": "Conversations worth keeping.",
         "body": [
           "The friends, mentors and strangers whose sentences stuck around longer than they should have."
-        ]
-      }
+        ] }
     ]
   },
   {
@@ -1223,14 +347,8 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     "tagline": "This is the new page for the new branch",
     "blurb": "the same Laptop page",
     "leaves": [
-      {
-        "slug": "keyboard",
-        "title": "New keyboard",
-        "blurb": "Look at my new keyboard",
-        "body": [
-          "<h1>Look at my new keyboard</h1>"
-        ]
-      }
+      { "slug": "keyboard", "title": "New keyboard", "blurb": "Look at my new keyboard",
+        "body": [ "<h1>Look at my new keyboard</h1>" ] }
     ]
   }
 ];
@@ -1246,23 +364,16 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     }
 
     // =========================================================================
-    // ROUTER — simple hash-based SPA router
+    // ROUTER
     // =========================================================================
 
     var appEl = document.getElementById("app");
 
-    // Parse hash: #/branch/leaf, #/branch, #/
     function parseHash() {
       var hash = window.location.hash.replace(/^#/, "") || "/";
-      // Remove trailing slash (but keep root "/")
-      if (hash !== "/" && hash.endsWith("/")) {
-        hash = hash.slice(0, -1);
-      }
+      if (hash !== "/" && hash.endsWith("/")) hash = hash.slice(0, -1);
       var parts = hash.split("/").filter(Boolean);
-      return {
-        path: "/" + (parts.length ? parts.join("/") : ""),
-        parts: parts,
-      };
+      return { path: "/" + (parts.length ? parts.join("/") : ""), parts: parts };
     }
 
     function navigate(path) {
@@ -1274,69 +385,44 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     // =========================================================================
 
     function renderHomePage() {
-      // Build SpiderWeb SVG
       var spiderWebHTML = buildSpiderWebSVG();
 
-      // Build navigation grid
       var navItemsHTML = branches
         .map(function (b) {
           return (
-            '<a onclick="navigate(\'/' +
-            b.slug +
-            '\')" class="group bg-background p-5 transition-colors hover:bg-card" style="cursor:pointer">' +
-            '<span class="nav-title">' +
-            escapeHTML(b.title) +
-            "</span>" +
-            '<span class="nav-tagline">' +
-            escapeHTML(b.tagline) +
-            "</span>" +
+            '<a onclick="navigate(\'/' + b.slug + '\')" class="group bg-background p-5 transition-colors hover:bg-card" style="cursor:pointer">' +
+            '<span class="nav-title">' + escapeHTML(b.title) + "</span>" +
+            '<span class="nav-tagline">' + escapeHTML(b.tagline) + "</span>" +
             "</a>"
           );
         })
         .join("");
 
-      // Update meta tags
       document.title = "Rooban — A Web of Blog, Tech and Life";
-      updateMetaDescription(
-        "Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new."
-      );
+      updateMetaDescription("Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new.");
       updateOGTitle("Rooban — A Web of Blog, Tech and Life");
       updateOGDescription("Explore Rooban's writing, projects and notes through an interactive web.");
 
       appEl.innerHTML =
         '<main class="min-h-screen overflow-hidden px-5 py-14">' +
         '<header class="mx-auto max-w-xl text-center">' +
-        '<h1 class="font-display text-4xl tracking-[0.14em] uppercase sm:text-5xl">' +
-        escapeHTML(CENTER.name) +
-        "</h1>" +
-        '<p class="mt-4 font-body text-sm leading-relaxed text-muted-foreground">' +
-        escapeHTML(CENTER.tagline) +
-        "</p>" +
+        '<h1 class="font-display text-4xl tracking-[0.14em] uppercase sm:text-5xl">' + escapeHTML(CENTER.name) + "</h1>" +
+        '<p class="mt-4 font-body text-sm leading-relaxed text-muted-foreground">' + escapeHTML(CENTER.tagline) + "</p>" +
         "</header>" +
-        '<div class="mt-6">' +
-        spiderWebHTML +
-        "</div>" +
-        '<nav class="mx-auto mt-6 nav-grid max-w-xl">' +
-        navItemsHTML +
-        "</nav>" +
+        '<div class="mt-6">' + spiderWebHTML + "</div>" +
+        '<nav class="mx-auto mt-6 nav-grid max-w-xl">' + navItemsHTML + "</nav>" +
         '<p class="mt-10 text-center">' +
-        '<a onclick="navigate(\'/admin\')" class="admin-link" style="cursor:pointer">Admin</a>' + 
-        '<a href=dashboard/ class="admin-link" style="cursor:pointer">Dashboard</a>' +
+        '<a onclick="navigate(\'/admin\')" class="admin-link" style="cursor:pointer">Admin</a>' +
+        '<a href="dashboard/" class="admin-link" style="cursor:pointer">Dashboard</a>' +
         "</p>" +
         "</main>";
-        
 
-      // Initialize SpiderWeb interactivity
       initSpiderWeb();
     }
 
     function renderBranchPage(branchSlug) {
       var branch = getBranch(branchSlug);
-
-      if (!branch) {
-        renderNotFoundPage();
-        return;
-      }
+      if (!branch) { renderNotFoundPage(); return; }
 
       document.title = branch.title + " — Rooban's Web";
       updateMetaDescription(branch.blurb);
@@ -1347,18 +433,10 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         .map(function (leaf) {
           return (
             '<li>' +
-            '<a onclick="navigate(\'/' +
-            branch.slug +
-            "/" +
-            leaf.slug +
-            '\')" class="group flex items-baseline justify-between gap-6 py-6" style="cursor:pointer">' +
+            '<a onclick="navigate(\'/' + branch.slug + "/" + leaf.slug + '\')" class="group flex items-baseline justify-between gap-6 py-6" style="cursor:pointer">' +
             "<span>" +
-            '<span class="leaf-title">' +
-            escapeHTML(leaf.title) +
-            "</span>" +
-            '<span class="leaf-blurb">' +
-            escapeHTML(leaf.blurb) +
-            "</span>" +
+            '<span class="leaf-title">' + escapeHTML(leaf.title) + "</span>" +
+            '<span class="leaf-blurb">' + escapeHTML(leaf.blurb) + "</span>" +
             "</span>" +
             '<span class="leaf-arrow">→</span>' +
             "</a>" +
@@ -1371,18 +449,10 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         '<main class="min-h-screen px-6 py-16">' +
         '<div class="mx-auto max-w-2xl">' +
         '<a onclick="navigate(\'/\')" class="back-link">← back to the web</a>' +
-        '<p class="mt-12 branch-tagline">' +
-        escapeHTML(branch.tagline) +
-        "</p>" +
-        '<h1 class="mt-3 branch-title">' +
-        escapeHTML(branch.title) +
-        "</h1>" +
-        '<p class="mt-5 branch-blurb">' +
-        escapeHTML(branch.blurb) +
-        "</p>" +
-        '<ul class="mt-14 border-t border-border leaf-list">' +
-        leavesHTML +
-        "</ul>" +
+        '<p class="mt-12 branch-tagline">' + escapeHTML(branch.tagline) + "</p>" +
+        '<h1 class="mt-3 branch-title">' + escapeHTML(branch.title) + "</h1>" +
+        '<p class="mt-5 branch-blurb">' + escapeHTML(branch.blurb) + "</p>" +
+        '<ul class="mt-14 border-t border-border leaf-list">' + leavesHTML + "</ul>" +
         "</div>" +
         "</main>";
     }
@@ -1390,15 +460,9 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     function renderLeafPage(branchSlug, leafSlug) {
       var branch = getBranch(branchSlug);
       var leaf = getLeaf(branchSlug, leafSlug);
+      if (!branch || !leaf) { renderNotFoundPage(); return; }
 
-      if (!branch || !leaf) {
-        renderNotFoundPage();
-        return;
-      }
-
-      var siblings = branch.leaves.filter(function (l) {
-        return l.slug !== leaf.slug;
-      });
+      var siblings = branch.leaves.filter(function (l) { return l.slug !== leaf.slug; });
 
       document.title = leaf.title + " · " + branch.title + " — Rooban's Web";
       updateMetaDescription(leaf.blurb);
@@ -1407,24 +471,14 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
 
       var bodyHTML = leaf.body
         .map(function (para) {
-          if (isHTMLBlock(para)) {
-            return '<div class="leaf-html-block">' + para + "</div>";
-          }
+          if (isHTMLBlock(para)) return '<div class="leaf-html-block">' + para + "</div>";
           return '<p class="font-body text-base leading-8 text-muted-foreground">' + escapeHTML(para) + "</p>";
         })
         .join("");
 
       var siblingsHTML = siblings
         .map(function (s) {
-          return (
-            '<a onclick="navigate(\'/' +
-            branch.slug +
-            "/" +
-            s.slug +
-            '\')" class="nearby-pill">' +
-            escapeHTML(s.title) +
-            "</a>"
-          );
+          return '<a onclick="navigate(\'/' + branch.slug + "/" + s.slug + '\')" class="nearby-pill">' + escapeHTML(s.title) + "</a>";
         })
         .join("");
 
@@ -1434,39 +488,25 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         '<nav class="breadcrumb">' +
         '<a onclick="navigate(\'/\')">Rooban</a>' +
         '<span class="sep">/</span>' +
-        "<a onclick=\"navigate('/" +
-        branch.slug +
-        '\')">' +
-        escapeHTML(branch.title) +
-        "</a>" +
+        "<a onclick=\"navigate('/" + branch.slug + '\')">' + escapeHTML(branch.title) + "</a>" +
         "</nav>" +
-        '<h1 class="mt-12 leaf-page-title">' +
-        escapeHTML(leaf.title) +
-        "</h1>" +
-        '<p class="mt-4 leaf-page-blurb">' +
-        escapeHTML(leaf.blurb) +
-        "</p>" +
-        '<div class="mt-10 space-y-6 leaf-body">' +
-        bodyHTML +
-        "</div>" +
+        '<h1 class="mt-12 leaf-page-title">' + escapeHTML(leaf.title) + "</h1>" +
+        '<p class="mt-4 leaf-page-blurb">' + escapeHTML(leaf.blurb) + "</p>" +
+        '<div class="mt-10 space-y-6 leaf-body">' + bodyHTML + "</div>" +
         (siblings.length > 0
-          ? '<p class="mt-16 nearby-label">Nearby strands</p>' +
-            '<div class="mt-4 nearby-pills">' +
-            siblingsHTML +
-            "</div>"
+          ? '<p class="mt-16 nearby-label">Nearby strands</p>' + '<div class="mt-4 nearby-pills">' + siblingsHTML + "</div>"
           : "") +
         "</div>" +
         "</main>";
     }
 
     // =========================================================================
-    // ADMIN PAGE — edit branches & pages, save directly to the file
+    // ADMIN PAGE — edit branches & pages, save straight to the server
     // =========================================================================
 
-    // Holds the on-disk file handle once the user connects it (File System
-    // Access API — Chrome/Edge only). Lives only for this tab session.
-    var fileHandle = null;
-    var fileConnected = false;
+    // Must match the $SECRET value inside save.php on the server.
+    var ADMIN_SECRET = 'CHANGE_THIS_TO_A_LONG_RANDOM_STRING';
+
     var hasUnsavedChanges = false;
     var lastStatusText = "";
     var lastStatusKind = "";
@@ -1487,14 +527,8 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         .replace(/>/g, "&gt;");
     }
 
-    // A body line is treated as raw HTML (e.g. an <img>) if it starts with
-    // "<" — otherwise it's plain text wrapped in a paragraph.
     function isHTMLBlock(str) {
       return /^\s*</.test(str || "");
-    }
-
-    function isFSAccessSupported() {
-      return typeof window.showOpenFilePicker === "function";
     }
 
     function setSaveStatus(text, kind) {
@@ -1511,42 +545,6 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       setSaveStatus("Unsaved changes", "dirty");
     }
 
-    async function connectToFile() {
-      if (!isFSAccessSupported()) {
-        window.alert(
-          "Your browser can't save directly to a file (this needs Chrome or Edge). " +
-          "Use \"Download a copy\" below instead, then replace your deployed file with it."
-        );
-        return;
-      }
-      try {
-        var handles = await window.showOpenFilePicker({
-          types: [{ description: "HTML file", accept: { "text/html": [".html"] } }],
-          excludeAcceptAllOption: false,
-          multiple: false,
-        });
-        var handle = handles[0];
-        var perm = await handle.requestPermission({ mode: "readwrite" });
-        if (perm !== "granted") {
-          window.alert("Write permission wasn't granted, so changes can't be saved to this file.");
-          return;
-        }
-        fileHandle = handle;
-        fileConnected = true;
-        renderAdminPage();
-      } catch (err) {
-        if (err && err.name === "AbortError") return; // user cancelled the picker
-        console.error(err);
-        window.alert("Couldn't connect to that file.");
-      }
-    }
-
-    function disconnectFile() {
-      fileHandle = null;
-      fileConnected = false;
-      renderAdminPage();
-    }
-
     function buildExportHTML() {
       var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
       var marker = /\/\/ ADMIN:BRANCHES:START[\s\S]*?\/\/ ADMIN:BRANCHES:END/;
@@ -1558,18 +556,6 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       return html.replace(marker, newBlock);
     }
 
-    function downloadHTML(html) {
-      var blob = new Blob([html], { type: "text/html" });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url;
-      a.download = "index.html";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
     function normalizeSlugs() {
       branches.forEach(function (b) {
         b.slug = slugify(b.slug || b.title);
@@ -1579,6 +565,10 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       });
     }
 
+    // Saves directly to the server by POSTing the rebuilt HTML to save.php,
+    // which overwrites index.html in place. Replaces the old File System
+    // Access based flow (which only worked with a local file, never a
+    // remote host).
     async function saveChanges() {
       normalizeSlugs();
       var html = buildExportHTML();
@@ -1587,38 +577,31 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         return;
       }
 
-      if (fileHandle) {
-        try {
-          var writable = await fileHandle.createWritable();
-          await writable.write(html);
-          await writable.close();
-          hasUnsavedChanges = false;
-          setSaveStatus("Saved to " + (fileHandle.name || "file") + " ✓", "clean");
-        } catch (err) {
-          console.error(err);
-          window.alert(
-            "Couldn't save to the connected file (it may have moved, or permission was revoked). " +
-            "Try reconnecting, or use \"Download a copy\" instead."
-          );
-          fileHandle = null;
-          fileConnected = false;
+      setSaveStatus("Saving…", "dirty");
+
+      try {
+        var res = await fetch('save.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/html',
+            'X-Admin-Secret': ADMIN_SECRET
+          },
+          body: html
+        });
+        var data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || ('HTTP ' + res.status));
         }
-      } else {
-        downloadHTML(html);
+
         hasUnsavedChanges = false;
-        setSaveStatus("Downloaded a copy ✓", "clean");
+        setSaveStatus('Saved to index.html ✓', 'clean');
+      } catch (err) {
+        console.error(err);
+        setSaveStatus('Save failed — see console', 'dirty');
+        window.alert('Save failed: ' + err.message);
       }
       renderAdminPage();
-    }
-
-    function downloadCopy() {
-      normalizeSlugs();
-      var html = buildExportHTML();
-      if (html === null) {
-        window.alert("Couldn't find the data markers in this page — export aborted.");
-        return;
-      }
-      downloadHTML(html);
     }
 
     function renderAdminPage() {
@@ -1627,16 +610,11 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     }
 
     function adminBar() {
-      var statusHTML = fileConnected
-        ? '<span class="file-pill file-pill-connected">📄 ' + escapeHTML(fileHandle.name || "connected file") + '</span>' +
-          '<button type="button" class="admin-btn admin-btn-primary" onclick="saveChanges()">💾 Save changes</button>' +
-          '<button type="button" class="admin-btn admin-btn-ghost" onclick="disconnectFile()">Disconnect</button>'
-        : '<button type="button" class="admin-btn admin-btn-primary" onclick="connectToFile()">📂 Connect your index.html file</button>' +
-          '<button type="button" class="admin-btn admin-btn-ghost" onclick="saveChanges()">Download a copy</button>';
-
       return (
         '<div class="admin-bar">' +
-        '<div class="admin-bar-row">' + statusHTML + "</div>" +
+        '<div class="admin-bar-row">' +
+        '<button type="button" class="admin-btn admin-btn-primary" onclick="saveChanges()">💾 Save changes</button>' +
+        '</div>' +
         '<div class="admin-bar-row">' +
         '<span id="save-status" class="save-status' + (lastStatusKind ? " save-status-" + lastStatusKind : "") + '">' + escapeHTML(lastStatusText) + "</span>" +
         "</div>" +
@@ -1721,7 +699,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         '<div class="mx-auto max-w-2xl">' +
         '<a onclick="navigate(\'/\')" class="back-link">← back to the web</a>' +
         '<h1 class="mt-6 admin-title">Admin</h1>' +
-        '<p class="mt-2 admin-sub">Edit branches and pages below. Connect your index.html file once, then "Save changes" writes straight to it — no downloads.</p>' +
+        '<p class="mt-2 admin-sub">Edit branches and pages below. "Save changes" writes straight to index.html on the server.</p>' +
         adminBar() +
         '<div class="mt-8 admin-branch-list">' + branchesHTML + "</div>" +
         '<button type="button" class="admin-btn admin-btn-primary mt-6" onclick="addBranch()">+ Add branch</button>' +
@@ -1742,9 +720,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     function updateLeafField(bi, li, field, value) {
       branches[bi].leaves[li][field] = value;
       markUnsaved();
-      if (field === "title" || field === "slug") {
-        renderLeafSummaryInPlace(bi, li);
-      }
+      if (field === "title" || field === "slug") renderLeafSummaryInPlace(bi, li);
     }
 
     function renderLeafSummaryInPlace(bi, li) {
@@ -1764,9 +740,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     function updateLeafBody(bi, li, value) {
       branches[bi].leaves[li].body = value
         .split("\n")
-        .filter(function (line) {
-          return line.trim().length > 0;
-        });
+        .filter(function (line) { return line.trim().length > 0; });
       markUnsaved();
     }
 
@@ -1792,13 +766,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
 
     function addBranch() {
       var n = branches.length + 1;
-      branches.push({
-        slug: "branch-" + n,
-        title: "New Branch",
-        tagline: "",
-        blurb: "",
-        leaves: [{ slug: "new-page", title: "New Page", blurb: "", body: [] }],
-      });
+      branches.push({ slug: "branch-" + n, title: "New Branch", tagline: "", blurb: "", leaves: [{ slug: "new-page", title: "New Page", blurb: "", body: [] }] });
       markUnsaved();
       renderAdminPage();
     }
@@ -1824,7 +792,6 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       renderAdminPage();
     }
 
-
     function renderNotFoundPage() {
       document.title = "404 — Rooban";
       updateMetaDescription("Page not found");
@@ -1833,8 +800,8 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       appEl.innerHTML =
         '<div class="not-found-page">' +
         '<div class="not-found-card">' +
-        '<h1>404</h1>' +
-        '<h2>Page not found</h2>' +
+        "<h1>404</h1>" +
+        "<h2>Page not found</h2>" +
         "<p>The page you're looking for doesn't exist or has been moved.</p>" +
         '<div class="mt-6">' +
         '<button class="btn btn-primary" onclick="navigate(\'/\')">Go home</button>' +
@@ -1859,41 +826,31 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
     }
 
     // =========================================================================
-    // SPIDER WEB SVG BUILDER — mirrors src/components/SpiderWeb.tsx
+    // SPIDER WEB SVG BUILDER
     // =========================================================================
 
     var SIZE = 720;
     var C = SIZE / 2;
     var R_BRANCH = 168;
     var R_LEAF = 300;
-    var leafSpread = 34; // degrees between leaves
+    var leafSpread = 34;
 
-    // Evenly spaces branches around the circle, starting at the top (-90deg),
-    // so adding/removing branches never needs manual angle edits.
     function getBranchAngles(count) {
       var angles = [];
       if (count <= 0) return angles;
       var step = 360 / count;
-      for (var i = 0; i < count; i++) {
-        angles.push(-90 + i * step);
-      }
+      for (var i = 0; i < count; i++) angles.push(-90 + i * step);
       return angles;
     }
 
-    function rad(d) {
-      return (d * Math.PI) / 180;
-    }
+    function rad(d) { return (d * Math.PI) / 180; }
 
     function pt(angle, r) {
-      return {
-        x: C + Math.cos(rad(angle)) * r,
-        y: C + Math.sin(rad(angle)) * r,
-      };
+      return { x: C + Math.cos(rad(angle)) * r, y: C + Math.sin(rad(angle)) * r };
     }
 
     function buildSpiderWebSVG() {
       var branchAngles = getBranchAngles(branches.length);
-      // Build nodes: for each branch, compute its position and its leaves' positions
       var nodes = branches.map(function (branch, i) {
         var angle = branchAngles[i];
         var branchPt = pt(angle, R_BRANCH);
@@ -1902,22 +859,12 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
 
         var leaves = branch.leaves.map(function (leaf, j) {
           var la = startAngle + j * leafSpread;
-          return {
-            leaf: leaf,
-            x: pt(la, R_LEAF).x,
-            y: pt(la, R_LEAF).y,
-          };
+          return { leaf: leaf, x: pt(la, R_LEAF).x, y: pt(la, R_LEAF).y };
         });
 
-        return {
-          branch: branch,
-          x: branchPt.x,
-          y: branchPt.y,
-          leaves: leaves,
-        };
+        return { branch: branch, x: branchPt.x, y: branchPt.y, leaves: leaves };
       });
 
-      // Ring paths
       var rings = [R_BRANCH, R_LEAF];
       function ringPath(r) {
         return "M " + (C - r) + " " + C + " A " + r + " " + r + " 0 1 1 " + (C + r) + " " + C + " A " + r + " " + r + " 0 1 1 " + (C - r) + " " + C;
@@ -1925,49 +872,23 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
 
       var ringsHTML = rings
         .map(function (r) {
-          return (
-            '<path d="' +
-            ringPath(r) +
-            '" fill="none" stroke="var(--silk)" stroke-width="0.8" stroke-opacity="0.5" />'
-          );
+          return '<path d="' + ringPath(r) + '" fill="none" stroke="var(--silk)" stroke-width="0.8" stroke-opacity="0.5" />';
         })
         .join("");
 
-      // Build each branch group
       var branchGroupsHTML = nodes
         .map(function (n, i) {
           var animDelay = i * -2.3;
           var animDuration = 7 + i * 1.6;
 
-          // Strand lines: center -> branch, branch -> each leaf
-          var strandLines =
-            '<line x1="' +
-            C +
-            '" y1="' +
-            C +
-            '" x2="' +
-            n.x +
-            '" y2="' +
-            n.y +
-            '" stroke="var(--silk-strong)" stroke-width="1.4" />';
+          var strandLines = '<line x1="' + C + '" y1="' + C + '" x2="' + n.x + '" y2="' + n.y + '" stroke="var(--silk-strong)" stroke-width="1.4" />';
 
           var leafLines = n.leaves
             .map(function (l) {
-              return (
-                '<line x1="' +
-                n.x +
-                '" y1="' +
-                n.y +
-                '" x2="' +
-                l.x +
-                '" y2="' +
-                l.y +
-                '" stroke="var(--silk-strong)" stroke-width="1" stroke-opacity="0.8" />'
-              );
+              return '<line x1="' + n.x + '" y1="' + n.y + '" x2="' + l.x + '" y2="' + l.y + '" stroke="var(--silk-strong)" stroke-width="1" stroke-opacity="0.8" />';
             })
             .join("");
 
-          // Leaf nodes (clickable)
           var leafNodesHTML = n.leaves
             .map(function (l, j) {
               var lAnimDelay = j * -1.7 - i;
@@ -1975,124 +896,49 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
               var labelY = l.y + (l.y < C ? -16 : 24);
 
               return (
-                '<a onclick="event.stopPropagation(); navigate(\'/' +
-                n.branch.slug +
-                "/" +
-                l.leaf.slug +
-                '\')" class="group" style="cursor:pointer">' +
-                '<g class="strand-wobble" style="animation-delay:' +
-                lAnimDelay +
-                "s; animation-duration:" +
-                lAnimDuration +
-                's">' +
-                '<circle cx="' +
-                l.x +
-                '" cy="' +
-                l.y +
-                '" r="22" fill="transparent" />' +
-                '<circle cx="' +
-                l.x +
-                '" cy="' +
-                l.y +
-                '" r="5" fill="var(--dew)" class="leaf-dot" data-hover-color="var(--accent-warm)" filter="url(#softGlow)" />' +
-                '<text x="' +
-                l.x +
-                '" y="' +
-                labelY +
-                '" text-anchor="middle" fill="var(--muted-foreground)" font-family="var(--font-body)" font-size="13px" letter-spacing="0.025em" class="leaf-label" data-hover-color="var(--accent-warm)">' +
-                escapeHTML(l.leaf.title) +
-                "</text>" +
+                '<a onclick="event.stopPropagation(); navigate(\'/' + n.branch.slug + "/" + l.leaf.slug + '\')" class="group" style="cursor:pointer">' +
+                '<g class="strand-wobble" style="animation-delay:' + lAnimDelay + "s; animation-duration:" + lAnimDuration + 's">' +
+                '<circle cx="' + l.x + '" cy="' + l.y + '" r="22" fill="transparent" />' +
+                '<circle cx="' + l.x + '" cy="' + l.y + '" r="5" fill="var(--dew)" class="leaf-dot" data-hover-color="var(--accent-warm)" filter="url(#softGlow)" />' +
+                '<text x="' + l.x + '" y="' + labelY + '" text-anchor="middle" fill="var(--muted-foreground)" font-family="var(--font-body)" font-size="13px" letter-spacing="0.025em" class="leaf-label" data-hover-color="var(--accent-warm)">' + escapeHTML(l.leaf.title) + "</text>" +
                 "</g>" +
                 "</a>"
               );
             })
             .join("");
 
-          // Branch node (clickable)
           var branchNodeHTML =
-            '<a onclick="event.stopPropagation(); navigate(\'/' +
-            n.branch.slug +
-            '\')" class="group" style="cursor:pointer">' +
-            '<circle cx="' +
-            n.x +
-            '" cy="' +
-            n.y +
-            '" r="15" fill="var(--accent-warm)" opacity="0.5" filter="url(#strongGlow)" class="node-glow" style="animation-delay:' +
-            (i * -1.3) +
-            's" />' +
-            '<circle cx="' +
-            n.x +
-            '" cy="' +
-            n.y +
-            '" r="9" fill="var(--accent-warm)" class="branch-dot" data-hover-color="var(--dew)" filter="url(#softGlow)" />' +
-            '<circle cx="' +
-            n.x +
-            '" cy="' +
-            n.y +
-            '" r="17" fill="none" stroke="var(--accent-warm)" stroke-width="1" opacity="0.4" class="branch-ring" data-hover-opacity="1" />' +
-            '<text x="' +
-            n.x +
-            '" y="' +
-            (n.y - 28) +
-            '" text-anchor="middle" fill="var(--foreground)" font-family="var(--font-display)" font-size="19px" letter-spacing="0.18em" text-transform="uppercase">' +
-            escapeHTML(n.branch.title) +
-            "</text>" +
+            '<a onclick="event.stopPropagation(); navigate(\'/' + n.branch.slug + '\')" class="group" style="cursor:pointer">' +
+            '<circle cx="' + n.x + '" cy="' + n.y + '" r="15" fill="var(--accent-warm)" opacity="0.5" filter="url(#strongGlow)" class="node-glow" style="animation-delay:' + (i * -1.3) + 's" />' +
+            '<circle cx="' + n.x + '" cy="' + n.y + '" r="9" fill="var(--accent-warm)" class="branch-dot" data-hover-color="var(--dew)" filter="url(#softGlow)" />' +
+            '<circle cx="' + n.x + '" cy="' + n.y + '" r="17" fill="none" stroke="var(--accent-warm)" stroke-width="1" opacity="0.4" class="branch-ring" data-hover-opacity="1" />' +
+            '<text x="' + n.x + '" y="' + (n.y - 28) + '" text-anchor="middle" fill="var(--foreground)" font-family="var(--font-display)" font-size="19px" letter-spacing="0.18em" text-transform="uppercase">' + escapeHTML(n.branch.title) + "</text>" +
             "</a>";
 
           return (
-            '<g class="strand-wobble" style="animation-delay:' +
-            animDelay +
-            "s; animation-duration:" +
-            animDuration +
-            's">' +
-            strandLines +
-            leafLines +
-            leafNodesHTML +
-            branchNodeHTML +
+            '<g class="strand-wobble" style="animation-delay:' + animDelay + "s; animation-duration:" + animDuration + 's">' +
+            strandLines + leafLines + leafNodesHTML + branchNodeHTML +
             "</g>"
           );
         })
         .join("");
 
-      // Center node
       var centerHTML =
-        '<circle cx="' +
-        C +
-        '" cy="' +
-        C +
-        '" r="60" fill="var(--accent-warm)" opacity="0.28" filter="url(#strongGlow)" class="node-glow" style="animation-duration:5s" />' +
-        '<circle cx="' +
-        C +
-        '" cy="' +
-        C +
-        '" r="44" fill="var(--card)" stroke="var(--silk-strong)" filter="url(#softGlow)" />' +
-        '<text x="' +
-        C +
-        '" y="' +
-        (C + 6) +
-        '" text-anchor="middle" fill="var(--foreground)" font-family="var(--font-display)" font-size="22px" letter-spacing="0.1em">' +
-        escapeHTML(CENTER.name) +
-        "</text>";
+        '<circle cx="' + C + '" cy="' + C + '" r="60" fill="var(--accent-warm)" opacity="0.28" filter="url(#strongGlow)" class="node-glow" style="animation-duration:5s" />' +
+        '<circle cx="' + C + '" cy="' + C + '" r="44" fill="var(--card)" stroke="var(--silk-strong)" filter="url(#softGlow)" />' +
+        '<text x="' + C + '" y="' + (C + 6) + '" text-anchor="middle" fill="var(--foreground)" font-family="var(--font-display)" font-size="22px" letter-spacing="0.1em">' + escapeHTML(CENTER.name) + "</text>";
 
       var defsHTML =
         '<defs>' +
         '<filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">' +
         '<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />' +
         '<feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur2" />' +
-        '<feMerge>' +
-        '<feMergeNode in="blur2" />' +
-        '<feMergeNode in="blur1" />' +
-        '<feMergeNode in="SourceGraphic" />' +
-        '</feMerge>' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
         '</filter>' +
         '<filter id="strongGlow" x="-300%" y="-300%" width="700%" height="700%">' +
         '<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />' +
         '<feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur2" />' +
-        '<feMerge>' +
-        '<feMergeNode in="blur2" />' +
-        '<feMergeNode in="blur1" />' +
-        '<feMergeNode in="SourceGraphic" />' +
-        '</feMerge>' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
         '</filter>' +
         '<radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">' +
         '<stop offset="0%" stop-color="var(--accent-warm)" stop-opacity="0.45" />' +
@@ -2101,24 +947,15 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         '</radialGradient>' +
         '</defs>';
 
-      var ambientGlowHTML =
-        '<circle cx="' + C + '" cy="' + C + '" r="' + (R_LEAF * 0.95) + '" fill="url(#centerGlow)" class="node-glow" style="animation-duration:8s" />';
+      var ambientGlowHTML = '<circle cx="' + C + '" cy="' + C + '" r="' + (R_LEAF * 0.95) + '" fill="url(#centerGlow)" class="node-glow" style="animation-duration:8s" />';
 
-      // Full SVG
       return (
         '<div class="spider-web-container">' +
-        '<svg viewBox="0 0 ' +
-        SIZE +
-        " " +
-        SIZE +
-        '" xmlns="http://www.w3.org/2000/svg">' +
+        '<svg viewBox="0 0 ' + SIZE + " " + SIZE + '" xmlns="http://www.w3.org/2000/svg">' +
         defsHTML +
         '<g class="web-sway">' +
         '<g class="web-group" id="web-drag-group">' +
-        ambientGlowHTML +
-        ringsHTML +
-        branchGroupsHTML +
-        centerHTML +
+        ambientGlowHTML + ringsHTML + branchGroupsHTML + centerHTML +
         "</g>" +
         "</g>" +
         "</svg>" +
@@ -2130,23 +967,15 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       var svg = document.querySelector(".spider-web-container svg");
       var g = document.getElementById("web-drag-group");
       if (!svg || !g) return;
-
-      // Skip if reduced motion is preferred
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      var x = 0,
-        y = 0,
-        vx = 0,
-        vy = 0;
+      var x = 0, y = 0, vx = 0, vy = 0;
       var dragging = false;
-      var startX = 0,
-        startY = 0;
+      var startX = 0, startY = 0;
       var moved = false;
       var raf = 0;
 
-      function getScale() {
-        return SIZE / (svg.getBoundingClientRect().width || SIZE);
-      }
+      function getScale() { return SIZE / (svg.getBoundingClientRect().width || SIZE); }
 
       function apply() {
         g.style.transform = "translate(" + x + "px, " + y + "px) rotate(" + (x * 0.012) + "deg)";
@@ -2171,9 +1000,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         raf = requestAnimationFrame(tick);
       }
 
-      function loop() {
-        if (!raf) raf = requestAnimationFrame(tick);
-      }
+      function loop() { if (!raf) raf = requestAnimationFrame(tick); }
 
       function onDown(e) {
         dragging = true;
@@ -2190,8 +1017,7 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
         var nx = (e.clientX - startX) * s * 0.45;
         var ny = (e.clientY - startY) * s * 0.45;
         if (Math.abs(e.clientX - startX) > 6 || Math.abs(e.clientY - startY) > 6) moved = true;
-        var prevX = x,
-          prevY = y;
+        var prevX = x, prevY = y;
         var limit = 90;
         x = Math.max(-limit, Math.min(limit, nx));
         y = Math.max(-limit, Math.min(limit, ny));
@@ -2221,7 +1047,6 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       window.addEventListener("pointercancel", onUp);
       svg.addEventListener("click", onClick, true);
 
-      // Store cleanup reference
       svg._spiderWebCleanup = function () {
         svg.removeEventListener("pointerdown", onDown);
         window.removeEventListener("pointermove", onMove);
@@ -2232,12 +1057,9 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       };
     }
 
-    // Clean up previous SpiderWeb listeners when navigating away
     function cleanupSpiderWeb() {
       var svg = document.querySelector(".spider-web-container svg");
-      if (svg && svg._spiderWebCleanup) {
-        svg._spiderWebCleanup();
-      }
+      if (svg && svg._spiderWebCleanup) svg._spiderWebCleanup();
     }
 
     // =========================================================================
@@ -2275,22 +1097,17 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
 
     function route() {
       cleanupSpiderWeb();
-
       var parsed = parseHash();
       var parts = parsed.parts;
 
       try {
         if (parts.length === 0) {
-          // Home: /
           renderHomePage();
         } else if (parts.length === 1 && parts[0] === "admin") {
-          // Admin: /admin
           renderAdminPage();
         } else if (parts.length === 1) {
-          // Branch: /blog, /tech, /life
           renderBranchPage(parts[0]);
         } else if (parts.length === 2) {
-          // Leaf: /blog/essays, /tech/projects, etc.
           renderLeafPage(parts[0], parts[1]);
         } else {
           renderNotFoundPage();
@@ -2301,17 +1118,9 @@ Less itinerary, more atmosphere.</textarea></label><div class="admin-image-row">
       }
     }
 
-    // Listen for hash changes
     window.addEventListener("hashchange", route);
-
-    // Initial route
     route();
 
-    // Also handle the case where there's no hash at all — redirect to #/
-    if (!window.location.hash) {
-      window.location.hash = "#/";
-    }
+    if (!window.location.hash) window.location.hash = "#/";
   </script>
-
-
 </body></html>
