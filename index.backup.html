@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rooban — A Web of Blog, Tech and Life</title>
+  <meta name="description" content="Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new.">
+  <meta name="author" content="Rooban">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rooban — A Web of Blog, Tech and Life">
+  <meta property="og:description" content="Explore Rooban's writing, projects and notes through an interactive web.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    // =========================================================================
+    // DATA LAYER
+    // =========================================================================
+
+    const CENTER = {
+      name: "Rooban",
+      tagline: "A web spun from thoughts, code and quiet hours.",
+    };
+
+    // ADMIN:BRANCHES:START
+    var branches = [
+  {
+    "slug": "blog",
+    "title": "Blog",
+    "tagline": "Words caught in the silk",
+    "blurb": "Longer thinking \u2014 essays, notes and half-finished arguments that needed somewhere to sit.",
+    "leaves": [
+      {
+        "slug": "essays",
+        "title": "Essays",
+        "blurb": "Slow pieces on attention, craft and taste.",
+        "body": [
+          "Essays are the widest strands of this web. They start as a single question and get pulled outward until the shape holds.",
+          "Recent threads: what makes a tool feel honest, why constraint beats capability, and the quiet cost of always shipping."
+        ],
+        "links": []
+      },
+      {
+        "slug": "notes",
+        "title": "Notes",
+        "blurb": "Short captures, unpolished on purpose.",
+        "body": [
+          "Notes are the sticky bits \u2014 one paragraph, one idea, no obligation to conclude.",
+          "Most of them never grow up into essays, and that is entirely the point."
+        ],
+        "links": []
+      },
+      {
+        "slug": "reading",
+        "title": "Reading",
+        "blurb": "What the web caught this month.",
+        "body": [
+          "A running log of books, papers and long articles, with the one line that made each worth keeping.",
+          "Fiction and systems writing get equal weight here."
+        ],
+        "links": []
+      }
+    ],
+    "subbranches": []
+  },
+  {
+    "slug": "tech",
+    "title": "Tech",
+    "tagline": "Structure, load-bearing",
+    "blurb": "The engineering strands \u2014 what I build, how it is put together, and what broke along the way.",
+    "leaves": [
+      {
+        "slug": "projects",
+        "title": "Projects",
+        "blurb": "Things built and shipped.",
+        "body": [
+          "Side projects, tools and experiments, each with the problem it was trying to solve.",
+          "Some are alive, some are archived, all of them taught something."
+        ],
+        "links": []
+      },
+      {
+        "slug": "systems",
+        "title": "Systems",
+        "blurb": "Architecture, data flow, tradeoffs.",
+        "body": [
+          "How the pieces connect: queues, caches, boundaries, and the places where complexity likes to hide.",
+          "Diagrams first, prose second."
+        ],
+        "links": []
+      },
+      {
+        "slug": "snippets",
+        "title": "Snippets",
+        "blurb": "Small code that earns its keep.",
+        "body": [
+          "Utilities, one-liners and patterns I keep re-typing until I finally wrote them down.",
+          "Copy freely."
+        ],
+        "links": []
+      }
+    ],
+    "subbranches": []
+  },
+  {
+    "slug": "life",
+    "title": "Life",
+    "tagline": "The soft anchor lines",
+    "blurb": "Everything outside the screen \u2014 travel, habits, people, and the ordinary days between.",
+    "leaves": [
+      {
+        "slug": "travel",
+        "title": "Travel",
+        "blurb": "Places, and how they changed the pace.",
+        "body": [
+          "Notes from roads, coastlines and unremarkable towns that turned out to be the good part.",
+          "Less itinerary, more atmosphere."
+        ],
+        "links": []
+      },
+      {
+        "slug": "habits",
+        "title": "Habits",
+        "blurb": "Small systems for ordinary days.",
+        "body": [
+          "Sleep, walking, writing at the same hour. Nothing clever \u2014 just repetition that survives bad weeks."
+        ],
+        "links": []
+      },
+      {
+        "slug": "people",
+        "title": "People",
+        "blurb": "Conversations worth keeping.",
+        "body": [
+          "The friends, mentors and strangers whose sentences stuck around longer than they should have."
+        ],
+        "links": []
+      }
+    ],
+    "subbranches": []
+  },
+  {
+    "slug": "asus-tuf",
+    "title": "Laptop",
+    "tagline": "This is the new page for the new branch",
+    "blurb": "the same Laptop page",
+    "leaves": [
+      {
+        "slug": "keyboard",
+        "title": "New keyboard",
+        "blurb": "Look at my new keyboard",
+        "body": [
+          "<h1>Look at my new keyboard</h1>"
+        ],
+        "links": []
+      }
+    ],
+    "subbranches": []
+  }
+];
+    // ADMIN:BRANCHES:END
+
+    function getBranch(slug) {
+      return branches.find(function (b) { return b.slug === slug; });
+    }
+
+    function getSubbranch(branchSlug, subSlug) {
+      var branch = getBranch(branchSlug);
+      if (!branch) return null;
+      var sub = (branch.subbranches || []).find(function (s) { return s.slug === subSlug; });
+      return sub ? { branch: branch, sub: sub } : null;
+    }
+
+    // Resolves a hash path (array of segments) into whichever thing it refers to.
+    // Handles: [branch], [branch, leaf], [branch, subbranch], [branch, subbranch, leaf]
+    function resolvePath(parts) {
+      if (parts.length === 1) {
+        var branch = getBranch(parts[0]);
+        return branch ? { kind: "branch", branch: branch } : null;
+      }
+      if (parts.length === 2) {
+        var branch = getBranch(parts[0]);
+        if (!branch) return null;
+        var leaf = branch.leaves.find(function (l) { return l.slug === parts[1]; });
+        if (leaf) return { kind: "leaf", branch: branch, leaf: leaf };
+        var sub = (branch.subbranches || []).find(function (s) { return s.slug === parts[1]; });
+        if (sub) return { kind: "subbranch", branch: branch, sub: sub };
+        return null;
+      }
+      if (parts.length === 3) {
+        var branch = getBranch(parts[0]);
+        if (!branch) return null;
+        var sub = (branch.subbranches || []).find(function (s) { return s.slug === parts[1]; });
+        if (!sub) return null;
+        var leaf = sub.leaves.find(function (l) { return l.slug === parts[2]; });
+        if (!leaf) return null;
+        return { kind: "leaf", branch: branch, sub: sub, leaf: leaf };
+      }
+      return null;
+    }
+
+    // Resolves a stored link path like "tech/systems" or "tech/hardware/keyboard"
+    // into { branch, sub, leaf } or null if it no longer points anywhere.
+    function resolveLinkPath(pathStr) {
+      var parts = String(pathStr || "").split("/").filter(Boolean);
+      var res = resolvePath(parts);
+      return res && res.kind === "leaf" ? res : null;
+    }
+
+    function leafHref(res) {
+      var parts = [res.branch.slug];
+      if (res.sub) parts.push(res.sub.slug);
+      parts.push(res.leaf.slug);
+      return "/" + parts.join("/");
+    }
+
+    // =========================================================================
+    // ROUTER
+    // =========================================================================
+
+    var appEl = document.getElementById("app");
+
+    function parseHash() {
+      var hash = window.location.hash.replace(/^#/, "") || "/";
+      if (hash !== "/" && hash.endsWith("/")) hash = hash.slice(0, -1);
+      var parts = hash.split("/").filter(Boolean);
+      return { path: "/" + (parts.length ? parts.join("/") : ""), parts: parts };
+    }
+
+    function navigate(path) {
+      window.location.hash = "#" + path;
+    }
+
+    // =========================================================================
+    // PAGE RENDERERS
+    // =========================================================================
+
+    function renderHomePage() {
+      var spiderWebHTML = buildSpiderWebSVG();
+
+      var navItemsHTML = branches
+        .map(function (b) {
+          return (
+            '<a onclick="navigate(\'/' + b.slug + '\')" class="group bg-background p-5 transition-colors hover:bg-card" style="cursor:pointer">' +
+            '<span class="nav-title">' + escapeHTML(b.title) + "</span>" +
+            '<span class="nav-tagline">' + escapeHTML(b.tagline) + "</span>" +
+            "</a>"
+          );
+        })
+        .join("");
+
+      document.title = "Rooban — A Web of Blog, Tech and Life";
+      updateMetaDescription("Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new.");
+      updateOGTitle("Rooban — A Web of Blog, Tech and Life");
+      updateOGDescription("Explore Rooban's writing, projects and notes through an interactive web.");
+
+      appEl.innerHTML =
+        '<main class="min-h-screen overflow-hidden px-5 py-14">' +
+        '<header class="mx-auto max-w-xl text-center">' +
+        '<h1 class="font-display text-4xl tracking-[0.14em] uppercase sm:text-5xl">' + escapeHTML(CENTER.name) + "</h1>" +
+        '<p class="mt-4 font-body text-sm leading-relaxed text-muted-foreground">' + escapeHTML(CENTER.tagline) + "</p>" +
+        "</header>" +
+        '<div class="mt-6">' + spiderWebHTML + "</div>" +
+        '<nav class="mx-auto mt-6 nav-grid max-w-xl">' + navItemsHTML + "</nav>" +
+        '<p class="mt-10 text-center">' +
+        '<a href="admin/" class="admin-link" style="cursor:pointer">Admin</a>' +
+        '<a href="dashboard/" class="admin-link" style="cursor:pointer">Dashboard</a>' +
+        "</p>" +
+        "</main>";
+
+      initSpiderWeb();
+    }
+
+    function leafListItemHTML(hrefParts, title, blurb) {
+      return (
+        '<li>' +
+        '<a onclick="navigate(\'/' + hrefParts.join("/") + '\')" class="group flex items-baseline justify-between gap-6 py-6" style="cursor:pointer">' +
+        "<span>" +
+        '<span class="leaf-title">' + escapeHTML(title) + "</span>" +
+        '<span class="leaf-blurb">' + escapeHTML(blurb) + "</span>" +
+        "</span>" +
+        '<span class="leaf-arrow">→</span>' +
+        "</a>" +
+        "</li>"
+      );
+    }
+
+    function renderBranchPage(branchSlug) {
+      var branch = getBranch(branchSlug);
+      if (!branch) { renderNotFoundPage(); return; }
+
+      document.title = branch.title + " — Rooban's Web";
+      updateMetaDescription(branch.blurb);
+      updateOGTitle(branch.title + " — Rooban's Web");
+      updateOGDescription(branch.blurb);
+
+      var leavesHTML = branch.leaves
+        .map(function (leaf) { return leafListItemHTML([branch.slug, leaf.slug], leaf.title, leaf.blurb); })
+        .join("");
+
+      var subbranches = branch.subbranches || [];
+      var subHTML = subbranches
+        .map(function (sub) {
+          var count = sub.leaves.length;
+          return leafListItemHTML([branch.slug, sub.slug], sub.title, (sub.blurb || "") + " · " + count + (count === 1 ? " page" : " pages"));
+        })
+        .join("");
+
+      appEl.innerHTML =
+        '<main class="min-h-screen px-6 py-16">' +
+        '<div class="mx-auto max-w-2xl">' +
+        '<a onclick="navigate(\'/\')" class="back-link">← back to the web</a>' +
+        '<p class="mt-12 branch-tagline">' + escapeHTML(branch.tagline) + "</p>" +
+        '<h1 class="mt-3 branch-title">' + escapeHTML(branch.title) + "</h1>" +
+        '<p class="mt-5 branch-blurb">' + escapeHTML(branch.blurb) + "</p>" +
+        (subbranches.length > 0
+          ? '<p class="nearby-label mt-14">Sub-branches</p>' + '<ul class="mt-2 border-t border-border leaf-list">' + subHTML + "</ul>"
+          : "") +
+        (branch.leaves.length > 0
+          ? '<p class="nearby-label mt-14">Pages</p>' + '<ul class="mt-2 border-t border-border leaf-list">' + leavesHTML + "</ul>"
+          : "") +
+        "</div>" +
+        "</main>";
+    }
+
+    function renderSubbranchPage(branchSlug, subSlug) {
+      var res = getSubbranch(branchSlug, subSlug);
+      if (!res) { renderNotFoundPage(); return; }
+      var branch = res.branch, sub = res.sub;
+
+      document.title = sub.title + " · " + branch.title + " — Rooban's Web";
+      updateMetaDescription(sub.blurb || branch.blurb);
+      updateOGTitle(sub.title + " · " + branch.title + " — Rooban's Web");
+      updateOGDescription(sub.blurb || branch.blurb);
+
+      var leavesHTML = sub.leaves
+        .map(function (leaf) { return leafListItemHTML([branch.slug, sub.slug, leaf.slug], leaf.title, leaf.blurb); })
+        .join("");
+
+      appEl.innerHTML =
+        '<main class="min-h-screen px-6 py-16">' +
+        '<div class="mx-auto max-w-2xl">' +
+        '<nav class="breadcrumb">' +
+        '<a onclick="navigate(\'/\')">Rooban</a>' +
+        '<span class="sep">/</span>' +
+        "<a onclick=\"navigate('/" + branch.slug + '\')">' + escapeHTML(branch.title) + "</a>" +
+        "</nav>" +
+        '<h1 class="mt-12 branch-title">' + escapeHTML(sub.title) + "</h1>" +
+        (sub.blurb ? '<p class="mt-5 branch-blurb">' + escapeHTML(sub.blurb) + "</p>" : "") +
+        '<ul class="mt-14 border-t border-border leaf-list">' + leavesHTML + "</ul>" +
+        "</div>" +
+        "</main>";
+    }
+
+    function renderLeafPage(branch, sub, leaf) {
+      var siblingList = sub ? sub.leaves : branch.leaves;
+      var siblings = siblingList.filter(function (l) { return l.slug !== leaf.slug; });
+      var basePath = sub ? [branch.slug, sub.slug] : [branch.slug];
+
+      document.title = leaf.title + " · " + branch.title + " — Rooban's Web";
+      updateMetaDescription(leaf.blurb);
+      updateOGTitle(leaf.title + " · " + branch.title + " — Rooban's Web");
+      updateOGDescription(leaf.blurb);
+
+      var bodyHTML = leaf.body
+        .map(function (para) {
+          if (isHTMLBlock(para)) return '<div class="leaf-html-block">' + para + "</div>";
+          return '<p class="font-body text-base leading-8 text-muted-foreground">' + escapeHTML(para) + "</p>";
+        })
+        .join("");
+
+      var siblingsHTML = siblings
+        .map(function (s) {
+          return '<a onclick="navigate(\'/' + basePath.concat(s.slug).join("/") + '\')" class="nearby-pill">' + escapeHTML(s.title) + "</a>";
+        })
+        .join("");
+
+      var linkedNotes = (leaf.links || [])
+        .map(resolveLinkPath)
+        .filter(Boolean);
+      var linkedHTML = linkedNotes
+        .map(function (res) {
+          return '<a onclick="navigate(\'' + leafHref(res) + '\')" class="nearby-pill">' + escapeHTML(res.leaf.title) + "</a>";
+        })
+        .join("");
+
+      var breadcrumbHTML =
+        '<nav class="breadcrumb">' +
+        '<a onclick="navigate(\'/\')">Rooban</a>' +
+        '<span class="sep">/</span>' +
+        "<a onclick=\"navigate('/" + branch.slug + '\')">' + escapeHTML(branch.title) + "</a>" +
+        (sub
+          ? '<span class="sep">/</span>' + "<a onclick=\"navigate('/" + branch.slug + "/" + sub.slug + '\')">' + escapeHTML(sub.title) + "</a>"
+          : "") +
+        "</nav>";
+
+      appEl.innerHTML =
+        '<main class="min-h-screen px-6 py-16">' +
+        '<div class="mx-auto max-w-2xl">' +
+        breadcrumbHTML +
+        '<h1 class="mt-12 leaf-page-title">' + escapeHTML(leaf.title) + "</h1>" +
+        '<p class="mt-4 leaf-page-blurb">' + escapeHTML(leaf.blurb) + "</p>" +
+        '<div class="mt-10 space-y-6 leaf-body">' + bodyHTML + "</div>" +
+        (siblings.length > 0
+          ? '<p class="mt-16 nearby-label">Nearby strands</p>' + '<div class="mt-4 nearby-pills">' + siblingsHTML + "</div>"
+          : "") +
+        (linkedNotes.length > 0
+          ? '<p class="mt-10 nearby-label">Linked notes</p>' + '<div class="mt-4 nearby-pills">' + linkedHTML + "</div>"
+          : "") +
+        "</div>" +
+        "</main>";
+    }
+
+    function renderNotFoundPage() {
+      document.title = "404 — Rooban";
+      updateMetaDescription("Page not found");
+      updateOGTitle("404 — Rooban");
+
+      appEl.innerHTML =
+        '<div class="not-found-page">' +
+        '<div class="not-found-card">' +
+        "<h1>404</h1>" +
+        "<h2>Page not found</h2>" +
+        "<p>The page you're looking for doesn't exist or has been moved.</p>" +
+        '<div class="mt-6">' +
+        '<button class="btn btn-primary" onclick="navigate(\'/\')">Go home</button>' +
+        "</div>" +
+        "</div>" +
+        "</div>";
+    }
+
+    function renderErrorPage() {
+      document.title = "This page didn't load";
+      appEl.innerHTML =
+        '<div class="error-page">' +
+        '<div class="error-card">' +
+        "<h1>This page didn't load</h1>" +
+        "<p>Something went wrong on our end. You can try refreshing or head back home.</p>" +
+        '<div class="error-actions">' +
+        '<button class="btn btn-primary" onclick="location.reload()">Try again</button>' +
+        '<a class="btn btn-outline" onclick="navigate(\'/\')" style="cursor:pointer">Go home</a>' +
+        "</div>" +
+        "</div>" +
+        "</div>";
+    }
+
+    function isHTMLBlock(str) {
+      return /^\s*</.test(str || "");
+    }
+
+    // =========================================================================
+    // SPIDER WEB — force-directed graph, Obsidian-graph style
+    // =========================================================================
+    // Real physics: nodes repel each other, links pull like springs, every
+    // node is individually draggable and reacts to the rest of the graph.
+    // Background drag pans, mouse wheel zooms, hovering a node highlights
+    // it and everything directly connected to it (tree links + cross-links).
+
+    var SIZE = 720;
+    var C = SIZE / 2;
+    var NODE_R = { center: 40, branch: 11, subbranch: 8, leaf: 5 };
+    var LINK_LEN = { center: 150, branch: 85, subbranch: 55 };
+
+    function buildSpiderWebSVG() {
+      return (
+        '<div class="spider-web-container">' +
+        '<svg viewBox="0 0 ' + SIZE + ' ' + SIZE + '" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+        '<filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur2" />' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
+        '</filter>' +
+        '<filter id="strongGlow" x="-300%" y="-300%" width="700%" height="700%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur2" />' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
+        '</filter>' +
+        '<radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">' +
+        '<stop offset="0%" stop-color="var(--accent-warm)" stop-opacity="0.4" />' +
+        '<stop offset="60%" stop-color="var(--accent-warm)" stop-opacity="0.1" />' +
+        '<stop offset="100%" stop-color="var(--accent-warm)" stop-opacity="0" />' +
+        '</radialGradient>' +
+        '</defs>' +
+        '<circle cx="' + C + '" cy="' + C + '" r="' + (SIZE * 0.42) + '" fill="url(#centerGlow)" />' +
+        '<g id="links-layer"></g>' +
+        '<g id="nodes-layer"></g>' +
+        '</svg>' +
+        '</div>'
+      );
+    }
+
+    function svgEl(tag, attrs) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (var k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
+    // Builds the node/edge graph from `branches`, including sub-branches and
+    // cross-links (leaf.links). Returns nodes, tree links, cross links, and
+    // an adjacency map used for hover highlighting.
+    function buildGraph() {
+      var nodes = [];
+      var links = [];       // tree edges: center-branch, branch-sub, branch/sub-leaf
+      var crossLinks = [];  // extra edges from leaf.links
+      var pathToNode = {};  // "branch/slug" or "branch/sub/slug" -> node
+
+      var center = { type: 'center', r: NODE_R.center, label: CENTER.name, x: C, y: C, vx: 0, vy: 0 };
+      nodes.push(center);
+
+      function scatterNear(anchor, spread) {
+        var a = Math.random() * Math.PI * 2;
+        var d = spread * 0.4 + Math.random() * spread;
+        return { x: anchor.x + Math.cos(a) * d, y: anchor.y + Math.sin(a) * d };
+      }
+
+      function addLeaf(anchorNode, leaf, pathParts, linkLen) {
+        var p = scatterNear(anchorNode, linkLen * 0.8);
+        var node = {
+          type: 'leaf', r: NODE_R.leaf, label: leaf.title, leafRef: leaf,
+          x: p.x, y: p.y, vx: 0, vy: 0
+        };
+        nodes.push(node);
+        links.push({ a: anchorNode, b: node, len: linkLen });
+        pathToNode[pathParts.join('/')] = node;
+        return node;
+      }
+
+      branches.forEach(function (branch) {
+        var p0 = scatterNear(center, SIZE * 0.28);
+        var bNode = { type: 'branch', r: NODE_R.branch, label: branch.title, slug: branch.slug, x: p0.x, y: p0.y, vx: 0, vy: 0 };
+        nodes.push(bNode);
+        links.push({ a: center, b: bNode, len: LINK_LEN.center });
+        pathToNode[branch.slug] = bNode;
+
+        branch.leaves.forEach(function (leaf) {
+          addLeaf(bNode, leaf, [branch.slug, leaf.slug], LINK_LEN.branch);
+        });
+
+        (branch.subbranches || []).forEach(function (sub) {
+          var ps = scatterNear(bNode, LINK_LEN.subbranch);
+          var sNode = { type: 'subbranch', r: NODE_R.subbranch, label: sub.title, slug: sub.slug, x: ps.x, y: ps.y, vx: 0, vy: 0 };
+          nodes.push(sNode);
+          links.push({ a: bNode, b: sNode, len: LINK_LEN.subbranch });
+          pathToNode[branch.slug + '/' + sub.slug] = sNode;
+
+          sub.leaves.forEach(function (leaf) {
+            addLeaf(sNode, leaf, [branch.slug, sub.slug, leaf.slug], LINK_LEN.branch);
+          });
+        });
+      });
+
+      // Second pass: resolve cross-links now that every leaf node exists.
+      nodes.forEach(function (n) {
+        if (n.type !== 'leaf' || !n.leafRef || !n.leafRef.links) return;
+        n.leafRef.links.forEach(function (pathStr) {
+          var target = pathToNode[String(pathStr || '').split('/').filter(Boolean).join('/')];
+          if (target && target !== n) {
+            crossLinks.push({ a: n, b: target, len: 160 });
+          }
+        });
+      });
+
+      // Adjacency map for hover highlighting (undirected, tree + cross).
+      var adjacency = new Map();
+      function link(a, b) {
+        if (!adjacency.has(a)) adjacency.set(a, new Set());
+        if (!adjacency.has(b)) adjacency.set(b, new Set());
+        adjacency.get(a).add(b);
+        adjacency.get(b).add(a);
+      }
+      links.forEach(function (l) { link(l.a, l.b); });
+      crossLinks.forEach(function (l) { link(l.a, l.b); });
+
+      return { nodes: nodes, links: links, crossLinks: crossLinks, adjacency: adjacency };
+    }
+
+    function initSpiderWeb() {
+      var svg = document.querySelector('.spider-web-container svg');
+      var linksLayer = document.getElementById('links-layer');
+      var nodesLayer = document.getElementById('nodes-layer');
+      if (!svg || !linksLayer || !nodesLayer) return;
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var graph = buildGraph();
+      var nodes = graph.nodes;
+      var links = graph.links;
+      var crossLinks = graph.crossLinks;
+      var adjacency = graph.adjacency;
+      var allLinks = links.concat(crossLinks);
+
+      links.forEach(function (link) {
+        link.el = svgEl('line', {
+          x1: link.a.x, y1: link.a.y, x2: link.b.x, y2: link.b.y,
+          stroke: 'var(--silk-strong)',
+          'stroke-width': link.len === LINK_LEN.center ? 1.4 : 1,
+          'stroke-opacity': link.len === LINK_LEN.center ? 1 : 0.75
+        });
+        link.el.style.transition = 'opacity 150ms ease';
+        linksLayer.appendChild(link.el);
+      });
+
+      crossLinks.forEach(function (link) {
+        link.el = svgEl('line', {
+          x1: link.a.x, y1: link.a.y, x2: link.b.x, y2: link.b.y,
+          stroke: 'var(--accent-warm)', 'stroke-width': 1, 'stroke-dasharray': '3 4', 'stroke-opacity': 0.55
+        });
+        link.el.style.transition = 'opacity 150ms ease';
+        linksLayer.appendChild(link.el);
+      });
+
+      function href(node) {
+        if (node.type === 'branch') return '/' + node.slug;
+        if (node.type === 'subbranch') return '/' + node.parentSlug + '/' + node.slug;
+        return null;
+      }
+
+      nodes.forEach(function (node) {
+        var g = svgEl('g', { style: 'cursor:pointer' });
+        g.style.transition = 'opacity 150ms ease';
+
+        if (node.type === 'center') {
+          node.glowEl = svgEl('circle', { r: node.r * 1.4, fill: 'var(--accent-warm)', opacity: 0.28, filter: 'url(#strongGlow)', class: 'node-glow' });
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--card)', stroke: 'var(--silk-strong)', filter: 'url(#softGlow)' });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: 5, fill: 'var(--foreground)', 'font-family': 'var(--font-display)', 'font-size': '20px', 'letter-spacing': '0.1em' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.glowEl); g.appendChild(node.circleEl); g.appendChild(node.textEl);
+        } else if (node.type === 'branch') {
+          node.glowEl = svgEl('circle', { r: node.r * 1.7, fill: 'var(--accent-warm)', opacity: 0.5, filter: 'url(#strongGlow)', class: 'node-glow' });
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--accent-warm)', filter: 'url(#softGlow)' });
+          node.ringEl = svgEl('circle', { r: node.r + 6, fill: 'none', stroke: 'var(--accent-warm)', 'stroke-width': 1, opacity: 0.4 });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: -(node.r + 14), fill: 'var(--foreground)', 'font-family': 'var(--font-display)', 'font-size': '17px', 'letter-spacing': '0.14em', 'text-transform': 'uppercase' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.glowEl); g.appendChild(node.ringEl); g.appendChild(node.circleEl); g.appendChild(node.textEl);
+          g.addEventListener('pointerdown', function (e) { onNodeDown(e, node); });
+          g.addEventListener('pointerup', function () { onNodeUp(node, function () { navigate(href(node)); }); });
+        } else if (node.type === 'subbranch') {
+          node.glowEl = svgEl('circle', { r: node.r * 1.6, fill: 'var(--dew)', opacity: 0.35, filter: 'url(#softGlow)', class: 'node-glow' });
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--dew)', filter: 'url(#softGlow)' });
+          node.ringEl = svgEl('circle', { r: node.r + 5, fill: 'none', stroke: 'var(--dew)', 'stroke-width': 1, opacity: 0.4 });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: -(node.r + 12), fill: 'var(--foreground)', 'font-family': 'var(--font-display)', 'font-size': '14px', 'letter-spacing': '0.08em' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.glowEl); g.appendChild(node.ringEl); g.appendChild(node.circleEl); g.appendChild(node.textEl);
+          g.addEventListener('pointerdown', function (e) { onNodeDown(e, node); });
+          g.addEventListener('pointerup', function () { onNodeUp(node, function () { navigate(href(node)); }); });
+        } else {
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--dew)', filter: 'url(#softGlow)' });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: -(node.r + 8), fill: 'var(--muted-foreground)', 'font-family': 'var(--font-body)', 'font-size': '12px', 'letter-spacing': '0.02em' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.circleEl); g.appendChild(node.textEl);
+          g.addEventListener('pointerdown', function (e) { onNodeDown(e, node); });
+          g.addEventListener('pointerup', function () {
+            onNodeUp(node, function () {
+              var ref = node.leafRef;
+              var res = resolveLinkPathFromNode(node);
+              navigate(res);
+            });
+          });
+        }
+
+        g.addEventListener('pointerenter', function () { onNodeHover(node); });
+        g.addEventListener('pointerleave', function () { onNodeUnhover(); });
+
+        node.groupEl = g;
+        nodesLayer.appendChild(g);
+      });
+
+      // Finds a leaf node's own href by walking which branch/sub it lives under.
+      function resolveLinkPathFromNode(leafNode) {
+        for (var i = 0; i < links.length; i++) {
+          if (links[i].b === leafNode) {
+            var anchor = links[i].a;
+            if (anchor.type === 'branch') return '/' + anchor.slug + '/' + leafNode.leafRef.slug;
+            if (anchor.type === 'subbranch') return '/' + anchor.parentSlug + '/' + anchor.slug + '/' + leafNode.leafRef.slug;
+          }
+        }
+        return '/';
+      }
+
+      // Stamp parentSlug onto subbranch nodes (needed for href/breadcrumb use above).
+      links.forEach(function (l) {
+        if (l.a.type === 'branch' && l.b.type === 'subbranch') l.b.parentSlug = l.a.slug;
+      });
+
+      function place(n) { n.groupEl.setAttribute('transform', 'translate(' + n.x + ',' + n.y + ')'); }
+      function placeLinks() {
+        allLinks.forEach(function (l) {
+          l.el.setAttribute('x1', l.a.x); l.el.setAttribute('y1', l.a.y);
+          l.el.setAttribute('x2', l.b.x); l.el.setAttribute('y2', l.b.y);
+        });
+      }
+      nodes.forEach(place);
+      placeLinks();
+
+      // --- Hover highlighting (Obsidian-style: dim everything not connected) ---
+      var hoveredNode = null;
+      function onNodeHover(node) {
+        hoveredNode = node;
+        var neighbors = adjacency.get(node) || new Set();
+        nodes.forEach(function (n) {
+          n.groupEl.style.opacity = (n === node || neighbors.has(n)) ? '1' : '0.18';
+        });
+        allLinks.forEach(function (l) {
+          l.el.style.opacity = (l.a === node || l.b === node) ? '1' : '0.08';
+        });
+      }
+      function onNodeUnhover() {
+        hoveredNode = null;
+        nodes.forEach(function (n) { n.groupEl.style.opacity = '1'; });
+        allLinks.forEach(function (l) { l.el.style.opacity = ''; });
+      }
+
+      // --- Physics ---
+      var REPEL = 9000;
+      var SPRING = 0.05;
+      var CENTER_PULL = 0.002;
+      var DAMPING = 0.82;
+      var PAD = 20;
+      var dragNode = null;
+      var raf = 0;
+
+      function mass(n) { return n.r * (n.type === 'center' ? 3 : n.type === 'branch' ? 1.6 : n.type === 'subbranch' ? 1.3 : 1); }
+
+      function step() {
+        var ke = 0;
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          if (n === dragNode) continue;
+          var ax = 0, ay = 0;
+          for (var j = 0; j < nodes.length; j++) {
+            if (i === j) continue;
+            var o = nodes[j];
+            var dx = n.x - o.x, dy = n.y - o.y;
+            var distSq = dx * dx + dy * dy || 0.01;
+            var dist = Math.sqrt(distSq);
+            var f = REPEL / distSq;
+            ax += (dx / dist) * f;
+            ay += (dy / dist) * f;
+          }
+          ax += (C - n.x) * CENTER_PULL;
+          ay += (C - n.y) * CENTER_PULL;
+          var m = mass(n);
+          n.vx = (n.vx + ax / m) * DAMPING;
+          n.vy = (n.vy + ay / m) * DAMPING;
+        }
+
+        allLinks.forEach(function (l) {
+          var dx = l.b.x - l.a.x, dy = l.b.y - l.a.y;
+          var dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+          var force = (dist - l.len) * SPRING;
+          var ux = dx / dist, uy = dy / dist;
+          if (l.a !== dragNode) { l.a.vx += (ux * force) / mass(l.a); l.a.vy += (uy * force) / mass(l.a); }
+          if (l.b !== dragNode) { l.b.vx -= (ux * force) / mass(l.b); l.b.vy -= (uy * force) / mass(l.b); }
+        });
+
+        nodes.forEach(function (n) {
+          if (n === dragNode) return;
+          n.x += n.vx; n.y += n.vy;
+          n.x = Math.max(PAD + n.r, Math.min(SIZE - PAD - n.r, n.x));
+          n.y = Math.max(PAD + n.r, Math.min(SIZE - PAD - n.r, n.y));
+          ke += n.vx * n.vx + n.vy * n.vy;
+          place(n);
+        });
+        placeLinks();
+
+        if (ke < 0.02 && !dragNode) { raf = 0; return; }
+        raf = requestAnimationFrame(step);
+      }
+
+      function wake() { if (!raf) raf = requestAnimationFrame(step); }
+      if (!reduceMotion) wake();
+
+      // --- Per-node dragging ---
+      function toSvgPoint(evt) {
+        var pt = svg.createSVGPoint();
+        pt.x = evt.clientX; pt.y = evt.clientY;
+        var ctm = svg.getScreenCTM();
+        if (!ctm) return { x: 0, y: 0 };
+        var p = pt.matrixTransform(ctm.inverse());
+        return { x: p.x, y: p.y };
+      }
+
+      var moveDist = 0;
+
+      function onNodeDown(e, node) {
+        e.stopPropagation();
+        dragNode = node;
+        moveDist = 0;
+        node.vx = 0; node.vy = 0;
+        try { e.target.setPointerCapture(e.pointerId); } catch (err) {}
+        wake();
+      }
+
+      function onGlobalMove(e) {
+        if (!dragNode) return;
+        var p = toSvgPoint(e);
+        moveDist += Math.abs(p.x - dragNode.x) + Math.abs(p.y - dragNode.y);
+        dragNode.x = Math.max(PAD + dragNode.r, Math.min(SIZE - PAD - dragNode.r, p.x));
+        dragNode.y = Math.max(PAD + dragNode.r, Math.min(SIZE - PAD - dragNode.r, p.y));
+        place(dragNode);
+        placeLinks();
+        e.preventDefault();
+      }
+
+      function onNodeUp(node, onClick) {
+        if (dragNode === node && moveDist < 6) onClick();
+      }
+
+      function onGlobalUp() { dragNode = null; wake(); }
+
+      window.addEventListener('pointermove', onGlobalMove, { passive: false });
+      window.addEventListener('pointerup', onGlobalUp);
+      window.addEventListener('pointercancel', onGlobalUp);
+
+      // --- Pan (drag empty background) & zoom (mouse wheel) ---
+      var view = { x: 0, y: 0, w: SIZE, h: SIZE };
+      function applyView() { svg.setAttribute('viewBox', view.x + ' ' + view.y + ' ' + view.w + ' ' + view.h); }
+
+      var panning = false, panStartX = 0, panStartY = 0, viewStartX = 0, viewStartY = 0;
+
+      function onBgDown(e) {
+        if (dragNode) return;
+        panning = true;
+        panStartX = e.clientX; panStartY = e.clientY;
+        viewStartX = view.x; viewStartY = view.y;
+      }
+      function onBgMove(e) {
+        if (!panning) return;
+        var scale = view.w / (svg.getBoundingClientRect().width || SIZE);
+        view.x = viewStartX - (e.clientX - panStartX) * scale;
+        view.y = viewStartY - (e.clientY - panStartY) * scale;
+        applyView();
+      }
+      function onBgUp() { panning = false; }
+
+      function onWheel(e) {
+        e.preventDefault();
+        var p = toSvgPoint(e);
+        var scaleFactor = e.deltaY > 0 ? 1.1 : 0.9;
+        var newW = Math.max(240, Math.min(SIZE * 2.2, view.w * scaleFactor));
+        view.x = p.x - (p.x - view.x) * (newW / view.w);
+        view.y = p.y - (p.y - view.y) * (newW / view.h);
+        view.w = newW; view.h = newW;
+        applyView();
+      }
+
+      svg.addEventListener('pointerdown', onBgDown);
+      window.addEventListener('pointermove', onBgMove);
+      window.addEventListener('pointerup', onBgUp);
+      svg.addEventListener('wheel', onWheel, { passive: false });
+
+      svg._spiderWebCleanup = function () {
+        window.removeEventListener('pointermove', onGlobalMove);
+        window.removeEventListener('pointerup', onGlobalUp);
+        window.removeEventListener('pointercancel', onGlobalUp);
+        window.removeEventListener('pointermove', onBgMove);
+        window.removeEventListener('pointerup', onBgUp);
+        svg.removeEventListener('wheel', onWheel);
+        if (raf) cancelAnimationFrame(raf);
+      };
+    }
+
+    function cleanupSpiderWeb() {
+      var svg = document.querySelector('.spider-web-container svg');
+      if (svg && svg._spiderWebCleanup) svg._spiderWebCleanup();
+    }
+
+    // =========================================================================
+    // META TAG HELPERS
+    // =========================================================================
+
+    function updateMetaDescription(desc) {
+      var meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", desc);
+    }
+
+    function updateOGTitle(title) {
+      var meta = document.querySelector('meta[property="og:title"]');
+      if (meta) meta.setAttribute("content", title);
+    }
+
+    function updateOGDescription(desc) {
+      var meta = document.querySelector('meta[property="og:description"]');
+      if (meta) meta.setAttribute("content", desc);
+    }
+
+    // =========================================================================
+    // UTILITY
+    // =========================================================================
+
+    function escapeHTML(str) {
+      var div = document.createElement("div");
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
+    // =========================================================================
+    // ROUTER DISPATCH
+    // =========================================================================
+
+    function route() {
+      cleanupSpiderWeb();
+      var parsed = parseHash();
+      var parts = parsed.parts;
+
+      try {
+        if (parts.length === 0) {
+          renderHomePage();
+        } else if (parts.length === 1 && parts[0] === "admin") {
+          window.location.href = "admin/";
+        } else {
+          var res = resolvePath(parts);
+          if (!res) { renderNotFoundPage(); return; }
+          if (res.kind === "branch") renderBranchPage(res.branch.slug);
+          else if (res.kind === "subbranch") renderSubbranchPage(res.branch.slug, res.sub.slug);
+          else if (res.kind === "leaf") renderLeafPage(res.branch, res.sub || null, res.leaf);
+        }
+      } catch (e) {
+        console.error(e);
+        renderErrorPage();
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+    route();
+
+    if (!window.location.hash) window.location.hash = "#/";
+
+  </script>
+</body></html>

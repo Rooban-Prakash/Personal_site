@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitTrack — Fitness Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+  <body>
+    <div id="app">
+      <!-- Sidebar / Nav -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <span class="logo-icon">💪</span>
+          <h1>FitTrack</h1>
+        </div>
+        <ul class="nav-list">
+          <li><button class="nav-btn active" data-view="dashboard">Dashboard</button></li>
+          <li><button class="nav-btn" data-view="weight">Weight</button></li>
+          <li><button class="nav-btn" data-view="workouts">Workouts</button></li>
+          <li><button class="nav-btn" data-view="mood">Mood</button></li>
+          <li><button class="nav-btn" data-view="habits">Habits</button></li>
+          <li><button class="nav-btn" data-view="charts">Charts</button></li>
+          <li><button class="nav-btn" data-view="settings">Settings</button></li>
+        </ul>
+        <button id="menu-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+
+      <!-- Main content -->
+      <main id="content">
+        <!-- DASHBOARD -->
+        <section class="view active" id="view-dashboard">
+          <header class="page-header">
+            <h2>Dashboard</h2>
+            <p class="page-subtitle" id="today-date"></p>
+          </header>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-icon">⚖️</span>
+              <div class="stat-info">
+                <span class="stat-label">Latest Weight</span>
+                <span class="stat-value" id="stat-weight">—</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">🔥</span>
+              <div class="stat-info">
+                <span class="stat-label">Workout Streak</span>
+                <span class="stat-value" id="stat-workout-streak">—</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">😊</span>
+              <div class="stat-info">
+                <span class="stat-label">Today's Mood</span>
+                <span class="stat-value" id="stat-mood">—</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">✅</span>
+              <div class="stat-info">
+                <span class="stat-label">Habits Today</span>
+                <span class="stat-value" id="stat-habits">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-charts">
+            <div class="chart-card">
+              <h3>Weight Trend (30 days)</h3>
+              <canvas id="dashboard-weight-chart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Mood Trend (30 days)</h3>
+              <canvas id="dashboard-mood-chart"></canvas>
+            </div>
+          </div>
+          <div class="recent-activity">
+            <h3>Recent Workouts</h3>
+            <div id="recent-workouts" class="recent-list"></div>
+          </div>
+        </section>
+
+        <!-- WEIGHT -->
+        <section class="view" id="view-weight">
+          <header class="page-header">
+            <h2>Body Weight</h2>
+            <p class="page-subtitle">Track your daily weight</p>
+          </header>
+          <div class="form-card">
+            <h3>Log Weight</h3>
+            <form id="weight-form" class="entry-form">
+              <div class="form-row">
+                <label>Date
+                  <input type="date" id="weight-date" required />
+                </label>
+                <label>Weight (kg)
+                  <input type="number" id="weight-value" step="0.1" min="0" required placeholder="75.0" />
+                </label>
+                <label>Note (optional)
+                  <input type="text" id="weight-note" placeholder="Feeling light" />
+                </label>
+              </div>
+              <button type="submit" class="btn-primary">Save Weight</button>
+            </form>
+          </div>
+          <div class="chart-card">
+            <h3>Weight History</h3>
+            <canvas id="weight-chart"></canvas>
+          </div>
+          <div class="data-card">
+            <h3>Weight Log</h3>
+            <div id="weight-list" class="entry-list"></div>
+          </div>
+        </section>
+
+        <!-- WORKOUTS -->
+        <section class="view" id="view-workouts">
+          <header class="page-header">
+            <h2>Workouts</h2>
+            <p class="page-subtitle">Log exercises, sets, and reps</p>
+          </header>
+          <div class="form-card">
+            <h3>Log Workout</h3>
+            <form id="workout-form" class="entry-form">
+              <div class="form-row">
+                <label>Date
+                  <input type="date" id="workout-date" required />
+                </label>
+                <label>Workout Name
+                  <input type="text" id="workout-name" required placeholder="Push Day" />
+                </label>
+                <label>Duration (min)
+                  <input type="number" id="workout-duration" min="0" placeholder="45" />
+                </label>
+              </div>
+              <h4>Exercises</h4>
+              <div id="exercise-list" class="exercise-list"></div>
+              <button type="button" class="btn-secondary" id="add-exercise-btn">+ Add Exercise</button>
+              <button type="submit" class="btn-primary">Save Workout</button>
+            </form>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-icon">🔥</span>
+              <div class="stat-info">
+                <span class="stat-label">Current Streak</span>
+                <span class="stat-value" id="workout-streak-display">—</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">📊</span>
+              <div class="stat-info">
+                <span class="stat-label">Total Workouts</span>
+                <span class="stat-value" id="total-workouts">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="data-card">
+            <h3>Workout History</h3>
+            <div id="workout-list" class="entry-list"></div>
+          </div>
+        </section>
+
+        <!-- MOOD -->
+        <section class="view" id="view-mood">
+          <header class="page-header">
+            <h2>Mood Tracker</h2>
+            <p class="page-subtitle">How are you feeling today?</p>
+          </header>
+          <div class="form-card">
+            <h3>Log Mood</h3>
+            <form id="mood-form" class="entry-form">
+              <div class="form-row">
+                <label>Date
+                  <input type="date" id="mood-date" required />
+                </label>
+              </div>
+              <div class="mood-selector">
+                <label class="mood-option">
+                  <input type="radio" name="mood-value" value="1" />
+                  <span class="mood-emoji">😞</span>
+                  <span class="mood-label">Awful</span>
+                </label>
+                <label class="mood-option">
+                  <input type="radio" name="mood-value" value="2" />
+                  <span class="mood-emoji">😕</span>
+                  <span class="mood-label">Bad</span>
+                </label>
+                <label class="mood-option">
+                  <input type="radio" name="mood-value" value="3" />
+                  <span class="mood-emoji">😐</span>
+                  <span class="mood-label">Okay</span>
+                </label>
+                <label class="mood-option">
+                  <input type="radio" name="mood-value" value="4" />
+                  <span class="mood-emoji">🙂</span>
+                  <span class="mood-label">Good</span>
+                </label>
+                <label class="mood-option">
+                  <input type="radio" name="mood-value" value="5" />
+                  <span class="mood-emoji">😄</span>
+                  <span class="mood-label">Great</span>
+                </label>
+              </div>
+              <label>Note (optional)
+                <input type="text" id="mood-note" placeholder="What's on your mind?" />
+              </label>
+              <button type="submit" class="btn-primary">Save Mood</button>
+            </form>
+          </div>
+          <div class="chart-card">
+            <h3>Mood History</h3>
+            <canvas id="mood-chart"></canvas>
+          </div>
+          <div class="data-card">
+            <h3>Mood Log</h3>
+            <div id="mood-list" class="entry-list"></div>
+          </div>
+        </section>
+
+        <!-- HABITS -->
+        <section class="view" id="view-habits">
+          <header class="page-header">
+            <h2>Habit Tracker</h2>
+            <p class="page-subtitle">Build streaks, one day at a time</p>
+          </header>
+          <div class="form-card">
+            <h3>Add Habit</h3>
+            <form id="habit-form" class="entry-form">
+              <div class="form-row">
+                <label>Habit Name
+                  <input type="text" id="habit-name" required placeholder="Drink 2L water" />
+                </label>
+                <label>Color
+                  <input type="color" id="habit-color" value="#10b981" />
+                </label>
+              </div>
+              <button type="submit" class="btn-primary">Add Habit</button>
+            </form>
+          </div>
+          <div id="habit-tracker" class="habit-tracker"></div>
+        </section>
+
+        <!-- CHARTS -->
+        <section class="view" id="view-charts">
+          <header class="page-header">
+            <h2>Charts & Insights</h2>
+            <p class="page-subtitle">Visualize your progress</p>
+          </header>
+          <div class="chart-card">
+            <h3>Weight Progress</h3>
+            <canvas id="charts-weight"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Workout Frequency (last 30 days)</h3>
+            <canvas id="charts-workout-freq"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Mood Over Time</h3>
+            <canvas id="charts-mood"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Habit Completion Rate (last 30 days)</h3>
+            <canvas id="charts-habits"></canvas>
+          </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section class="view" id="view-settings">
+          <header class="page-header">
+            <h2>Settings</h2>
+            <p class="page-subtitle">Export & sync your data</p>
+          </header>
+          <div class="form-card">
+            <h3>Google Sheets Sync</h3>
+            <p class="setting-desc">
+              Export your fitness data to Google Sheets. Enter your Google Apps Script Web App URL
+              to sync your weight, workouts, mood, and habit data.
+            </p>
+            <form id="sheets-form" class="entry-form">
+              <label>Google Apps Script Web App URL
+                <input type="url" id="sheets-url" placeholder="https://script.google.com/macros/s/..." />
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">Save URL</button>
+                <button type="button" class="btn-secondary" id="sync-now-btn">Sync Now</button>
+                <button type="button" class="btn-secondary" id="export-csv-btn">Export CSV</button>
+              </div>
+            </form>
+            <div id="sync-status" class="sync-status"></div>
+          </div>
+          <div class="form-card">
+            <h3>Data Management</h3>
+            <p class="setting-desc">Download a CSV file of all your tracked data.</p>
+            <button type="button" class="btn-secondary" id="download-all-btn">Download All Data (CSV)</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
