@@ -976,4 +976,54 @@
     if (!window.location.hash) window.location.hash = "#/";
 
   </script>
+
+<script>
+(function () {
+    function startDoodleRoaming() {
+        const doodles = document.querySelectorAll('.theme-doodle-icon');
+
+        if (!doodles.length) return;
+
+        doodles.forEach(function (doodle, index) {
+            roam(doodle, index);
+        });
+    }
+
+    function roam(doodle, index) {
+        const maxX = Math.max(
+            0,
+            window.innerWidth - doodle.offsetWidth - 20
+        );
+
+        const maxY = Math.max(
+            0,
+            window.innerHeight - doodle.offsetHeight - 20
+        );
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        const rotation = (Math.random() * 80) - 40;
+
+        const duration = 1500 + Math.random() * 3000;
+
+        doodle.style.transition =
+            'transform ' + duration + 'ms cubic-bezier(.4,0,.2,1)';
+
+        doodle.style.transform =
+            'translate(' + x + 'px, ' + y + 'px) rotate(' + rotation + 'deg)';
+
+        setTimeout(function () {
+            roam(doodle, index);
+        }, duration);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startDoodleRoaming);
+    } else {
+        startDoodleRoaming();
+    }
+})();
+</script>
+
 </body></html>
