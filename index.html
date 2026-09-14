@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rooban — A Web of Blog, Tech and Life</title>
+  <meta name="description" content="Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new.">
+  <meta name="author" content="Rooban">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rooban — A Web of Blog, Tech and Life">
+  <meta property="og:description" content="Explore Rooban's writing, projects and notes through an interactive web.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    // =========================================================================
+    // DATA LAYER
+    // =========================================================================
+
+    const CENTER = {
+      name: "Rooban Prakash",
+      tagline: "A web spun from thoughts, code and quiet hours.",
+    };
+
+    // A small set of MIT-licensed hand-doodled accent icons (from NK2552003/Iconoodle)
+    // used to decorate leaf pages when the "fun" theme is selected.
+    window.THEME_DOODLE_SVGS = {
+  "sparkle": "<svg viewBox=\"0 0 26 21\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M1.12955 10.2162C0.489624 10.2162 2.39691 10.0065 3.00573 9.80945C4.83852 9.21621 5.97407 8.18336 7.0016 6.57265C7.92586 5.12381 8.30377 3.73458 8.67698 2.0814C8.80466 1.51585 8.75261 0.402426 8.96446 1.40089C9.19824 2.50272 9.57151 3.65332 10.1481 4.62151C11.3451 6.63131 13.1112 7.3417 15.0526 8.44085C16.3066 9.15086 17.3459 9.40436 18.7769 9.40436C18.8057 9.40436 18.8323 9.40391 18.8569 9.40309M18.8569 9.40309C19.2417 9.39023 19.1227 9.28658 18.8569 9.40309ZM18.8569 9.40309C18.8347 9.41282 18.8114 9.42408 18.7874 9.43707C17.6966 10.0261 16.647 10.6769 15.6237 11.378C14.971 11.8252 13.962 12.3109 13.5382 13.0131C13.2017 13.5703 12.943 14.1736 12.6051 14.7332C12.0017 15.7329 11.9497 16.7144 11.6251 17.7969L11.6223 17.8064C11.5006 18.2124 11.4746 18.2989 11.2611 17.8595C10.0332 15.3332 8.34356 12.9153 5.88636 11.4655C4.43107 10.6069 3.12257 10.7066 1.57798 10.3143M21.733 14.9133C21.733 14.8986 21.6949 15.9268 21.5394 16.3212C21.401 16.6722 21.1856 17.16 20.8743 17.4529M20.8743 17.4529C20.8044 17.5187 20.7296 17.5747 20.6497 17.6171C20.5796 17.6543 20.4054 17.6408 20.5179 17.5722C20.6262 17.5061 20.7471 17.4686 20.8743 17.4529ZM20.8743 17.4529C21.302 17.4003 21.8007 17.5952 22.1282 17.7849C22.5669 18.0391 22.9615 18.3552 23.273 18.7561C23.2814 18.7668 23.5128 19.0481 23.5199 19.0123C23.6715 18.2488 24.1403 17.5657 24.5433 16.8945C24.5909 16.8151 24.7225 16.6594 24.8322 16.5351M24.8322 16.5351C24.9863 16.3606 25.0974 16.2479 24.873 16.4953C24.8599 16.5098 24.8463 16.523 24.8322 16.5351ZM24.8322 16.5351C24.0564 17.2011 21.9285 14.2323 22.3922 14.2323\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "star": "<svg viewBox=\"0 0 26 26\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M1.59564 23.0597C1.59356 23.0693 1.59123 23.0788 1.58868 23.0883M1.58868 23.0883C1.50871 23.3852 1.20972 23.6533 1.58868 23.0883ZM1.58868 23.0883C1.62901 23.0281 1.67701 22.9586 1.73377 22.8786C3.66234 20.1614 4.7816 16.7143 6.01599 13.4643M6.01599 13.4643C6.45118 12.3185 6.90069 11.1972 7.40501 10.141C7.8416 9.22671 8.23212 8.29346 8.60703 7.35446M6.01599 13.4643C7.5253 14.6537 9.07098 15.9358 10.6543 17.1569M6.01599 13.4643C6.00166 13.4531 5.98734 13.4418 5.97302 13.4305C4.34487 12.1488 2.29184 10.2453 1.01466 8.60083C0.922037 8.48157 1.30828 8.52913 1.45218 8.48336C2.04186 8.29578 2.64977 8.14794 3.25807 8.03717C5.02225 7.71591 6.81183 7.51054 8.60703 7.35446M8.60703 7.35446C9.46124 5.215 10.2344 3.04574 11.2868 1.00248C11.346 0.887595 12.9721 4.7608 13.1468 5.28001C13.3357 5.84155 13.5244 6.41091 13.7103 6.98677M8.60703 7.35446C10.3087 7.20651 12.0154 7.10286 13.7103 6.98677M13.7103 6.98677C14.3951 9.1079 15.0415 11.3172 15.5179 13.548M13.7103 6.98677C13.8633 6.97629 14.0162 6.96571 14.169 6.95498C16.4142 6.79741 21.6489 6.58808 23.9187 6.46525M15.5179 13.548C15.9979 15.7957 16.3052 18.0653 16.3052 20.2888C16.3052 21.0119 15.5175 20.4865 15.1317 20.2584C13.6065 19.3569 12.1144 18.2828 10.6543 17.1569M15.5179 13.548C16.9214 12.4736 18.3094 11.379 19.6772 10.2604C20.3828 9.68348 22.6602 7.02155 23.9187 6.46525M15.5179 13.548C13.9147 14.7752 12.2913 15.9762 10.6543 17.1569M10.6543 17.1569C8.97256 18.3698 7.27651 19.5613 5.57354 20.7376C4.59625 21.4126 3.89921 22.4097 2.88884 23.0597C2.36986 23.3937 1.48754 24.8868 1.48754 24.2696M23.9187 6.46525C25.0663 6.40315 25.456 6.36316 24.318 6.36316C24.202 6.36316 24.0674 6.3995 23.9187 6.46525Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "sun": "<svg viewBox=\"0 0 26 29\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M12.2819 13.2163C11.7944 12.25 12.1973 11.7402 12.9949 11.6005M12.9949 11.6005C13.3626 11.5361 13.8142 11.5504 14.3011 11.6349C17.0901 12.1188 16.0515 16.7888 13.753 17.3114C11.4013 17.8461 9.0886 15.9758 9.99474 13.5651C10.3051 12.7396 10.7932 12.0992 11.6545 11.8004C11.9809 11.6871 12.5538 11.5409 12.9949 11.6005ZM12.9949 11.6005C13.342 11.6474 13.6076 11.8217 13.6076 12.2397M12.5319 6.17578C12.7917 5.67482 12.6665 4.76237 12.7002 4.22599C12.7597 3.27818 12.8344 2.32997 12.91 1.38332C12.9514 0.865454 12.9216 0.909083 13.1737 1.29668M19.0869 8.28064C18.331 7.84773 22.0918 5.41275 22.5459 5.1995M21.5963 12.9626C22.7197 12.937 23.8535 12.7127 25 12.7127M20.5941 18.4022C20.8194 18.4022 20.9275 18.7179 21.0554 18.8752C21.8213 19.8169 22.692 20.6773 23.548 21.5364M16.5352 23.5313C16.5352 24.8163 16.7695 25.9826 17.0087 27.237M10.4694 22.3049C10.4652 22.2191 9.32189 24.7549 9.07529 25.1892M5.32483 19.1817C4.37762 19.1438 3.66879 19.5463 2.7155 19.8214M4.34848 13.4513C3.27406 12.6935 2.1084 12.0798 1 11.3732M5.04565 4.87794C4.35129 5.12774 6.61695 6.63224 6.94215 6.87273\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "thinheart": "<svg viewBox=\"0 0 26 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M13.5716 4.30405C13.0178 -0.320953 6.48909 0.615269 3.89526 2.84319C0.125893 6.0808 0.109566 11.4811 3.4236 15.0068C6.61113 18.3979 10.2279 21.259 13.0948 24.9198C13.3045 25.1876 14.7146 26.2455 14.7146 26.0763M14.5569 5.23471C14.1199 4.37011 15.0274 3.64326 15.5949 2.99031C16.8341 1.56455 19.14 0.796696 20.951 1.52745C24.4886 2.95491 25.7715 7.78149 24.5488 11.2521C23.343 14.6746 20.9687 17.3225 18.9008 20.2445C18.0749 21.4117 17.1607 22.5082 16.2965 23.646C15.874 24.2022 15.512 24.9662 15.0206 25.4523\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "moon": "<svg viewBox=\"0 0 26 25\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M6.18198 1.34328C6.18198 0.882685 5.70726 1.50642 5.60201 1.62943C4.3361 3.10894 2.9587 4.58932 2.01076 6.30044C0.165413 9.63146 1.03652 16.0368 3.09634 19.0824C5.71521 22.9545 11.4011 23.5167 15.7033 23.2504C18.272 23.0914 23.2155 22.3603 24.9995 20.1754C25.0177 20.1531 24.5151 20.1493 24.4392 20.1493C23.4621 20.1493 22.5587 19.7182 21.6763 19.33C19.738 18.4772 18.0364 17.2743 16.1542 16.324C14.2913 15.3835 12.6022 14.5851 11.6141 12.657C10.166 9.83117 8.88797 7.00066 8.17819 3.89395C7.96647 2.96723 7.24676 0.247939 7.24676 1.19854\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "filledstar": "<svg viewBox=\"0 0 26 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M5.63253 21.953C5.5473 21.913 5.50258 21.8427 5.48422 21.7588M5.48422 21.7588C5.43986 21.5561 5.54941 21.2738 5.61354 21.1455C5.86282 20.6465 6.07163 20.1283 6.25435 19.599M5.48422 21.7588C5.32621 22.2854 5.32992 22.5369 5.81089 21.8531C6.79561 20.4531 8.4378 19.4991 9.81485 18.5318C10.9951 17.7028 12.144 16.8205 13.2776 15.9133M5.48422 21.7588C5.68604 21.0862 6.1517 19.965 6.22379 19.7711C6.27343 19.6375 6.32199 19.5036 6.36956 19.3695M6.25435 19.599C6.30961 19.4389 6.36249 19.2778 6.41337 19.1159M6.25435 19.599C5.85626 20.3878 5.752 20.5448 6.19358 19.581C6.26494 19.4253 6.33834 19.2703 6.41337 19.1159M6.25435 19.599C6.2904 19.5276 6.32887 19.4509 6.36956 19.3695M6.41337 19.1159C6.76563 17.9953 7.0226 16.837 7.31633 15.7166C7.4787 15.0973 7.65316 14.4818 7.83672 13.8693M6.41337 19.1159C6.46066 19.0186 6.5086 18.9216 6.55708 18.8247M7.83672 13.8693C8.02504 13.2409 8.22295 12.6157 8.42723 11.9924M7.83672 13.8693C7.88844 13.8899 7.9402 13.9105 7.99199 13.9309M7.83672 13.8693C7.22474 13.6254 6.61777 13.3695 6.01918 13.0937C4.38339 12.34 2.21136 11.4588 1.00301 10.0243C0.879044 9.87711 4.62454 9.20026 4.91648 9.18275C6.44895 9.09082 7.96688 9.01417 9.47821 8.91332M8.42723 11.9924C8.55675 11.5973 8.68883 11.2029 8.82266 10.8092M8.42723 11.9924C7.38105 11.5404 6.31732 11.1402 5.23955 10.8064C4.95649 10.7187 3.64467 10.4412 3.76444 10.4412C4.15277 10.4412 4.56563 10.3976 4.94498 10.4897C5.1917 10.5497 5.31344 10.7785 5.57739 10.8404C6.56668 11.0724 7.79808 10.8836 8.82266 10.8092M8.42723 11.9924C8.47742 12.0141 8.52758 12.0359 8.57769 12.0578M8.82266 10.8092C9.0378 10.1761 9.25745 9.54455 9.47821 8.91332M8.82266 10.8092C8.88214 10.8048 8.94094 10.8009 8.99894 10.7975C9.00781 10.7969 9.01668 10.7964 9.02555 10.7959M9.47821 8.91332C10.0066 7.40241 10.5414 5.89351 11.0359 4.37162C11.1305 4.08044 11.746 1 12.2572 1C12.9827 1 13.6044 2.57502 13.8414 3.07051C14.6467 4.75435 15.4221 6.45541 16.1189 8.18731M9.47821 8.91332C9.57206 8.90705 9.66588 8.9007 9.75967 8.89424M16.1189 8.18731C16.3975 8.87963 16.6635 9.57689 16.9138 10.2799M16.1189 8.18731C15.3821 8.31285 14.6465 8.41879 13.9112 8.50974M16.1189 8.18731C16.5611 8.11198 17.0036 8.02959 17.4468 7.93915C19.8459 7.44961 22.4287 6.35548 24.8772 6.19801C25.2448 6.17437 24.6767 6.74864 24.6065 6.80509C23.2815 7.871 21.936 8.91276 20.5907 9.9529C19.5847 10.7307 18.5936 11.5366 17.6065 12.3513M16.9138 10.2799C16.9201 10.2976 16.9264 10.3152 16.9326 10.3329M16.9138 10.2799C17.074 10.2042 17.2327 10.1229 17.3909 10.0379M16.9138 10.2799C16.5464 10.4536 16.1713 10.5978 15.7769 10.6904M16.9326 10.3329C17.0463 10.6533 17.1566 10.9748 17.2635 11.2977C17.3801 11.6502 17.4938 12.0014 17.6065 12.3513M16.9326 10.3329C16.736 10.4594 16.5417 10.5838 16.3498 10.7043C14.8541 11.6432 13.3933 12.6595 12.0114 13.7625M16.9326 10.3329C17.0841 10.2355 17.2368 10.1368 17.3909 10.0379M17.6065 12.3513C18.232 14.2925 18.8283 16.1918 19.741 18.047C20.0584 18.6922 21.2726 20.3393 20.6326 20.0114C19.2973 19.3273 18.1408 18.2702 16.8171 17.5428C15.6735 16.9144 14.485 16.3916 13.2776 15.9133M17.6065 12.3513C16.9926 12.8579 16.3803 13.3679 15.7669 13.8767M13.2776 15.9133C12.6191 15.6525 11.9549 15.4049 11.2892 15.1606M13.2776 15.9133C13.6151 15.6432 13.9512 15.3709 14.2864 15.0971M11.2892 15.1606C11.2226 15.1362 11.156 15.1118 11.0894 15.0874M11.2892 15.1606C10.7205 16.7189 10.3147 17.6944 10.6388 16.6081C10.7896 16.1027 10.9393 15.5954 11.0894 15.0874M11.2892 15.1606C11.4197 14.8031 11.5588 14.4149 11.6996 14.0139M11.0894 15.0874C10.8615 15.004 10.6335 14.9209 10.4055 14.8377M11.0894 15.0874C11.1635 14.8363 11.2378 14.5851 11.3122 14.3338M10.4055 14.8377C10.1041 14.7276 9.80267 14.6173 9.50175 14.5059M10.4055 14.8377C9.92311 15.8933 9.42375 16.9399 8.88352 17.9639C8.32836 19.0161 7.88685 19.274 8.34186 17.8649C8.7104 16.7237 9.11068 15.614 9.50175 14.5059M10.4055 14.8377C10.6427 14.3187 10.8757 13.7975 11.1075 13.2758M9.50175 14.5059C9.28775 14.4267 9.07399 14.3469 8.86061 14.2662M9.50175 14.5059C9.70615 13.9267 9.90804 13.348 10.1016 12.7654M8.86061 14.2662C8.84369 14.2598 8.82678 14.2534 8.80987 14.247M8.86061 14.2662C9.04145 13.8456 9.21198 13.4224 9.37421 12.9969M8.86061 14.2662C8.68031 14.6855 8.48977 15.1022 8.28698 15.5161C8.05523 15.9892 7.80869 16.4567 7.55912 16.9231M8.80987 14.247C8.53651 14.1434 8.26378 14.0383 7.99199 13.9309M8.80987 14.247C8.39082 15.1633 7.95826 16.0857 7.55912 16.9231M8.80987 14.247C9.00235 13.8261 9.19198 13.4064 9.37421 12.9969M7.99199 13.9309C7.51563 15.5633 7.09649 17.2119 6.55708 18.8247M7.99199 13.9309C8.09204 13.5881 8.19462 13.2459 8.30136 12.905C8.39012 12.6215 8.48241 12.3392 8.57769 12.0578M9.75967 8.89424C10.0905 8.87146 10.421 8.8474 10.7513 8.82165M9.75967 8.89424C9.50791 9.5256 9.26104 10.1588 9.02555 10.7959M9.75967 8.89424C10.1689 7.86794 10.5911 6.84659 10.9984 5.82176C11.2986 5.06646 11.672 4.30284 11.8795 3.5151C11.9214 3.35611 11.828 2.93824 11.9649 3.02931C12.5685 3.43094 11.5431 6.11576 11.4161 6.54901C11.193 7.3098 10.9748 8.06782 10.7513 8.82165M10.7513 8.82165C10.8428 8.81452 10.9343 8.80725 11.0258 8.79985M10.7513 8.82165C10.5611 9.46333 10.367 10.102 10.1626 10.7367M11.0258 8.79985C11.0856 8.79501 11.1454 8.79011 11.2052 8.78515M11.0258 8.79985C10.9309 9.1162 10.8304 9.43021 10.7209 9.74029C10.619 10.0285 10.4912 10.362 10.3434 10.7291M11.0258 8.79985C11.4395 7.42092 11.7487 5.99751 12.2551 4.6615C12.7597 3.33011 11.5821 7.17265 11.2052 8.78515M11.2052 8.78515C11.8554 8.7312 12.505 8.66995 13.1546 8.59821M11.2052 8.78515C11.1879 8.85915 11.1723 8.92846 11.1586 8.99235C11.0334 9.5768 10.8897 10.1497 10.7324 10.7148M13.1546 8.59821C13.1759 8.59586 13.1971 8.5935 13.2184 8.59113M13.1546 8.59821C13.2158 8.44035 13.279 8.28334 13.3447 8.12751M13.1546 8.59821C13.0567 8.85092 12.9639 9.1058 12.8745 9.36153M13.2184 8.59113C13.2318 8.58964 13.2453 8.58813 13.2587 8.58663M13.2184 8.59113C13.0892 8.88796 12.9714 9.15391 12.8745 9.36153M13.2184 8.59113C13.2412 8.53881 13.2643 8.48554 13.2878 8.43145M13.2587 8.58663C13.4762 8.56223 13.6937 8.53664 13.9112 8.50974M13.2587 8.58663C13.1588 9.1194 13.0604 9.63421 12.984 9.9529C12.9327 10.1671 12.8645 10.4193 12.7836 10.6987M13.2587 8.58663C13.2684 8.53502 13.2781 8.48324 13.2878 8.43145M13.9112 8.50974C13.7362 8.18009 13.7087 7.81777 13.7123 7.44799M13.9112 8.50974C13.9303 8.54559 13.951 8.58105 13.9737 8.6161C14.4006 9.276 14.9419 9.78998 15.5456 10.2851C15.7215 10.4293 15.7859 10.5645 15.7769 10.6904M15.7669 13.8767C15.2746 14.2851 14.7815 14.6927 14.2864 15.0971M15.7669 13.8767C16.301 14.8443 16.931 15.7473 17.4824 16.7041C17.527 16.7814 17.5688 16.9283 17.6039 17.0711M15.7669 13.8767C15.7304 13.8106 15.6944 13.7442 15.6588 13.6774C15.3935 13.1792 15.118 12.9436 15.6649 13.3832M14.2864 15.0971C13.5421 14.6361 12.7832 14.189 12.0114 13.7625M14.2864 15.0971C14.702 15.3545 15.1131 15.6163 15.5194 15.8812C16.477 16.5056 16.4815 16.9379 17.6022 17.0709C17.6028 17.0709 17.6034 17.071 17.6039 17.0711M6.36956 19.3695C6.43377 19.1884 6.49619 19.0068 6.55708 18.8247M6.36956 19.3695C6.67 18.7681 7.09164 17.9039 7.55912 16.9231M6.55708 18.8247C6.8771 18.1855 7.22089 17.5553 7.55912 16.9231M8.57769 12.0578C8.72084 11.6351 8.87073 11.2147 9.02555 10.7959M8.57769 12.0578C8.90633 12.2016 9.23321 12.3504 9.55823 12.5038M9.02555 10.7959C9.40541 10.7734 9.78431 10.7532 10.1626 10.7367M10.1626 10.7367C9.97182 11.3294 9.77208 11.9187 9.55823 12.5038M10.1626 10.7367C10.2229 10.7341 10.2831 10.7315 10.3434 10.7291M9.55823 12.5038C9.49805 12.6685 9.43675 12.8329 9.37421 12.9969M9.55823 12.5038C9.56759 12.5083 9.57694 12.5127 9.5863 12.5171M9.37421 12.9969C9.44615 12.8352 9.51694 12.6751 9.5863 12.5171M9.5863 12.5171C9.86868 11.8738 10.1273 11.2656 10.3434 10.7291M9.5863 12.5171C9.75858 12.5986 9.93034 12.6814 10.1016 12.7654M10.3434 10.7291C10.4731 10.7238 10.6028 10.719 10.7324 10.7148M10.7324 10.7148C10.5395 11.408 10.3261 12.0893 10.1016 12.7654M10.7324 10.7148C11.2419 10.6979 11.7506 10.6891 12.2594 10.6918M10.1016 12.7654C10.439 12.931 10.7744 13.1013 11.1075 13.2758M11.1075 13.2758C11.4907 12.4135 11.8704 11.5497 12.2594 10.6918M11.1075 13.2758C11.2575 13.3544 11.4071 13.4339 11.5562 13.5141M12.2594 10.6918C12.4535 10.2639 12.6499 9.83746 12.8502 9.4134C12.8581 9.39654 12.8662 9.37925 12.8745 9.36153M12.2594 10.6918C12.3162 10.6921 12.373 10.6925 12.4297 10.6931M12.8745 9.36153C12.7569 9.69791 12.645 10.0358 12.5345 10.3721C12.4994 10.4789 12.4644 10.5859 12.4297 10.6931M13.2878 8.43145C13.4224 8.12081 13.5672 7.78349 13.7123 7.44799M13.2878 8.43145C13.3068 8.32975 13.3258 8.22803 13.3447 8.12751M13.7123 7.44799C13.8025 7.23963 13.8927 7.03197 13.9808 6.83184M13.7123 7.44799C13.7127 7.40635 13.7135 7.36462 13.7146 7.32283M13.9808 6.83184C14.5091 5.63185 14.9589 4.70252 14.8285 5.51537C14.7636 5.92011 14.2266 6.45191 13.9808 6.83184ZM13.9808 6.83184C13.9628 6.85972 13.9463 6.88678 13.9317 6.91292C13.8563 7.04792 13.7841 7.18464 13.7146 7.32283M13.7146 7.32283C13.582 7.58631 13.4596 7.85511 13.3447 8.12751M13.7146 7.32283C13.7189 7.14672 13.7273 6.96957 13.7273 6.79408C13.7273 6.1342 13.5445 7.06354 13.3447 8.12751M12.4297 10.6931C12.1272 11.6263 11.8389 12.5693 11.5562 13.5141M12.4297 10.6931C12.5477 10.6943 12.6656 10.6962 12.7836 10.6987M11.5562 13.5141C11.4975 13.7102 11.4391 13.9064 11.3808 14.1025M11.5562 13.5141C11.6454 13.5622 11.7345 13.6105 11.8234 13.6591M11.3808 14.1025C11.3579 14.1796 11.3351 14.2567 11.3122 14.3338M11.3808 14.1025C11.5189 13.9747 11.659 13.8485 11.8009 13.7241M11.3808 14.1025C11.2485 14.225 11.118 14.3489 10.9895 14.4743C10.226 15.2188 10.8395 14.7239 11.3122 14.3338M11.3122 14.3338C11.4623 14.2099 11.5982 14.0967 11.6713 14.037C11.6807 14.0293 11.6902 14.0216 11.6996 14.0139M11.6996 14.0139C11.7333 13.918 11.7671 13.8213 11.8009 13.7241M11.6996 14.0139C11.8031 13.9296 11.907 13.8458 12.0114 13.7625M11.8009 13.7241C11.8084 13.7024 11.8159 13.6808 11.8234 13.6591M11.8009 13.7241C11.819 13.7082 11.8371 13.6923 11.8552 13.6765M11.8234 13.6591C12.1829 12.6233 12.5406 11.5383 12.7836 10.6987M11.8234 13.6591C11.834 13.6649 11.8446 13.6707 11.8552 13.6765M12.7836 10.6987C13.3487 10.7109 13.9144 10.7387 14.4818 10.787C14.9425 10.8262 15.37 10.7858 15.7769 10.6904M15.7769 10.6904C15.7513 11.0514 15.122 11.3356 14.7896 11.5359C13.7581 12.1576 12.7692 12.8805 11.8552 13.6765M11.8552 13.6765C11.9074 13.7051 11.9594 13.7337 12.0114 13.7625M17.3909 10.0379C18.355 9.41831 19.3688 8.78515 20.4142 8.35064M17.3909 10.0379C17.9166 9.75523 18.4366 9.43128 18.986 9.13396C19.432 8.89265 19.9153 8.59829 20.4142 8.35064M20.4142 8.35064C20.7085 8.22829 21.0054 8.1217 21.3044 8.03559C21.5191 7.97374 22.601 7.73459 21.7809 7.86853C21.3233 7.94326 20.8625 8.12809 20.4142 8.35064ZM17.6039 17.0711C17.6993 17.0852 17.7046 17.3255 17.7046 17.3959C17.7046 17.5489 17.6642 17.3161 17.6039 17.0711Z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>",
+  "arrow": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 107 62\" width=\"64\" height=\"64\" preserveAspectRatio=\"xMidYMid meet\">\n<path stroke=\"#111111\" stroke-linecap=\"round\" stroke-width=\"2\" d=\"M.448 18.161C9.81 31.535 18.435 42.36 31.519 52.01c8.499 6.267 23.036 13.286 32.61 5.04 10.733-9.245 20.135-22.908 27.637-34.88 4.076-6.506 8.56-12.37 12.228-19.103.783-1.438 2.123-2.475-.54-1.219-3.806 1.796-7.733 3.154-11.741 4.473-7.628 2.512-9.298 3.588.786 1.09 2.4-.595 9.352-3.815 12.068-3.025 2.53.736 1.794 8.568 1.855 10.546.478 15.511-11.283.81-17.657-3.784\"/>\n</svg>"
+};
+
+    // ADMIN:BRANCHES:START
+    var branches = [
+  {
+    "slug": "blog",
+    "title": "Blog",
+    "tagline": "Words caught in the silk",
+    "blurb": "Longer thinking — essays, notes and half-finished arguments that needed somewhere to sit.",
+    "leaves": [
+      {
+        "slug": "essays",
+        "title": "Essays",
+        "blurb": "Slow pieces on attention, craft and taste.",
+        "body": [
+          "Essays are the widest strands of this web. They start as a single question and get pulled outward until the shape holds.",
+          "Recent threads: what makes a tool feel honest, why constraint beats capability, and the quiet cost of always shipping."
+        ],
+        "links": [],
+        "theme": "default"
+      },
+      {
+        "slug": "notes",
+        "title": "Notes",
+        "blurb": "Short captures, unpolished on purpose.",
+        "body": [
+          "Notes are the sticky bits — one paragraph, one idea, no obligation to conclude.",
+          "Most of them never grow up into essays, and that is entirely the point."
+        ],
+        "links": [],
+        "theme": "default"
+      },
+      {
+        "slug": "reading",
+        "title": "Reading",
+        "blurb": "What the web caught this month.",
+        "body": [
+          "A running log of books, papers and long articles, with the one line that made each worth keeping.",
+          "Fiction and systems writing get equal weight here."
+        ],
+        "links": [],
+        "theme": "terminal"
+      },
+      {
+        "slug": "tech-blog",
+        "title": "Tech Blog",
+        "blurb": "This is the my Techy  side ",
+        "body": [],
+        "links": [],
+        "theme": "editorial"
+      }
+    ],
+    "children": [
+      {
+        "slug": "tech-blog",
+        "title": "Tech Blog",
+        "tagline": "",
+        "blurb": "This is my Techy Side",
+        "leaves": [
+          {
+            "slug": "enterprise-1",
+            "title": "My First Enterprise Project",
+            "blurb": "",
+            "body": [
+              "This is my first tech project for Percision VPS"
+            ],
+            "links": [],
+            "theme": "editorial"
+          }
+        ],
+        "children": []
+      }
+    ]
+  },
+  {
+    "slug": "tech",
+    "title": "Tech",
+    "tagline": "Structure, load-bearing",
+    "blurb": "The engineering strands — what I build, how it is put together, and what broke along the way.",
+    "leaves": [
+      {
+        "slug": "projects",
+        "title": "Projects",
+        "blurb": "Things built and shipped.",
+        "body": [
+          "Side projects, tools and experiments, each with the problem it was trying to solve.",
+          "Some are alive, some are archived, all of them taught something."
+        ],
+        "links": [],
+        "theme": "editorial"
+      },
+      {
+        "slug": "systems",
+        "title": "Systems",
+        "blurb": "Architecture, data flow, tradeoffs.",
+        "body": [
+          "How the pieces connect: queues, caches, boundaries, and the places where complexity likes to hide.",
+          "Diagrams first, prose second."
+        ],
+        "links": [],
+        "theme": "default"
+      },
+      {
+        "slug": "snippets",
+        "title": "Snippets",
+        "blurb": "Small code that earns its keep.",
+        "body": [
+          "Utilities, one-liners and patterns I keep re-typing until I finally wrote them down.",
+          "Copy freely."
+        ],
+        "links": [],
+        "theme": "default"
+      }
+    ],
+    "children": []
+  },
+  {
+    "slug": "life",
+    "title": "Life",
+    "tagline": "The soft anchor lines",
+    "blurb": "Everything outside the screen — travel, habits, people, and the ordinary days between.",
+    "leaves": [
+      {
+        "slug": "travel",
+        "title": "Travel",
+        "blurb": "Places, and how they changed the pace.",
+        "body": [
+          "Notes from roads, coastlines and unremarkable towns that turned out to be the good part.",
+          "Less itinerary, more atmosphere."
+        ],
+        "links": [],
+        "theme": "default"
+      },
+      {
+        "slug": "habits",
+        "title": "Habits",
+        "blurb": "Small systems for ordinary days.",
+        "body": [
+          "Sleep, walking, writing at the same hour. Nothing clever — just repetition that survives bad weeks."
+        ],
+        "links": [],
+        "theme": "default"
+      },
+      {
+        "slug": "people",
+        "title": "People",
+        "blurb": "Conversations worth keeping.",
+        "body": [
+          "The friends, mentors and strangers whose sentences stuck around longer than they should have."
+        ],
+        "links": [],
+        "theme": "default"
+      }
+    ],
+    "children": [
+      {
+        "slug": "travel",
+        "title": "Travel",
+        "tagline": "",
+        "blurb": "",
+        "leaves": [
+          {
+            "slug": "page-1",
+            "title": "Places I travel",
+            "blurb": "",
+            "body": [],
+            "links": [
+              "tech/systems"
+            ],
+            "theme": "default"
+          }
+        ],
+        "children": []
+      }
+    ]
+  },
+  {
+    "slug": "asus-tuf",
+    "title": "Laptop",
+    "tagline": "This is the new page for the new branch",
+    "blurb": "the same Laptop page",
+    "leaves": [
+      {
+        "slug": "keyboard",
+        "title": "New keyboard",
+        "blurb": "Look at my new keyboard",
+        "body": [
+          "<h1>Look at my new keyboard</h1>"
+        ],
+        "links": [],
+        "theme": "neon"
+      }
+    ],
+    "children": []
+  }
+];
+    // ADMIN:BRANCHES:END
+
+    // Recursive tree: every branch can have its own `leaves` (terminal pages)
+    // AND its own `children` (nested branches, to any depth).
+
+    // Walks a slug path (e.g. ["blog","reading"] or ["blog","notes-series","part-1"])
+    // through the tree. At each step it first tries to match a child branch;
+    // if that fails on the LAST segment, it tries matching a leaf on the
+    // current branch instead. Works at any depth without special-casing.
+    function resolvePath(parts) {
+      var level = branches;
+      var chain = [];
+      for (var i = 0; i < parts.length; i++) {
+        var slug = parts[i];
+        var match = level.find(function (b) { return b.slug === slug; });
+        if (match) {
+          chain.push(match);
+          level = match.children || [];
+          continue;
+        }
+        if (i === parts.length - 1 && chain.length > 0) {
+          var parent = chain[chain.length - 1];
+          var leaf = parent.leaves.find(function (l) { return l.slug === slug; });
+          if (leaf) return { kind: "leaf", chain: chain, leaf: leaf };
+        }
+        return null;
+      }
+      if (chain.length === 0) return null;
+      return { kind: "branch", chain: chain };
+    }
+
+    function hrefForChain(chain, leaf) {
+      var parts = chain.map(function (b) { return b.slug; });
+      if (leaf) parts.push(leaf.slug);
+      return "/" + parts.join("/");
+    }
+
+    // Resolves a stored link path like "tech/systems" or "tech/notes/part-1"
+    // into { chain, leaf } or null if it no longer points anywhere.
+    function resolveLinkPath(pathStr) {
+      var parts = String(pathStr || "").split("/").filter(Boolean);
+      var res = resolvePath(parts);
+      return res && res.kind === "leaf" ? res : null;
+    }
+
+    // =========================================================================
+    // ROUTER
+    // =========================================================================
+
+    var appEl = document.getElementById("app");
+
+    function parseHash() {
+      var hash = window.location.hash.replace(/^#/, "") || "/";
+      if (hash !== "/" && hash.endsWith("/")) hash = hash.slice(0, -1);
+      var parts = hash.split("/").filter(Boolean);
+      return { path: "/" + (parts.length ? parts.join("/") : ""), parts: parts };
+    }
+
+    function navigate(path) {
+      window.location.hash = "#" + path;
+    }
+
+    // =========================================================================
+    // PAGE RENDERERS
+    // =========================================================================
+
+    function renderHomePage() {
+      var spiderWebHTML = buildSpiderWebSVG();
+
+      var navItemsHTML = branches
+        .map(function (b) {
+          return (
+            '<a onclick="navigate(\'/' + b.slug + '\')" class="group bg-background p-5 transition-colors hover:bg-card" style="cursor:pointer">' +
+            '<span class="nav-title">' + escapeHTML(b.title) + "</span>" +
+            '<span class="nav-tagline">' + escapeHTML(b.tagline) + "</span>" +
+            "</a>"
+          );
+        })
+        .join("");
+
+      document.title = "Rooban — A Web of Blog, Tech and Life";
+      updateMetaDescription("Rooban's personal site laid out as a spider web: blog, tech and life branch out from the center, each strand leading somewhere new.");
+      updateOGTitle("Rooban — A Web of Blog, Tech and Life");
+      updateOGDescription("Explore Rooban's writing, projects and notes through an interactive web.");
+
+      appEl.innerHTML =
+        '<main class="min-h-screen overflow-hidden px-5 py-14">' +
+        '<header class="mx-auto max-w-xl text-center">' +
+        '<h1 class="font-display text-4xl tracking-[0.14em] uppercase sm:text-5xl">' + escapeHTML(CENTER.name) + "</h1>" +
+        '<p class="mt-4 font-body text-sm leading-relaxed text-muted-foreground">' + escapeHTML(CENTER.tagline) + "</p>" +
+        "</header>" +
+        '<div class="mt-6">' + spiderWebHTML + "</div>" +
+        '<p class="spider-web-hint">drag a node to move it · drag empty space to pan · ctrl+scroll to zoom</p>' +
+        '<nav class="mx-auto mt-6 nav-grid max-w-xl">' + navItemsHTML + "</nav>" +
+        '<p class="mt-10 text-center">' +
+        '<a href="admin/" class="admin-link" style="cursor:pointer">Admin</a>' +
+        '<a href="dashboard/" class="admin-link" style="cursor:pointer">Dashboard</a>' +
+        "</p>" +
+        "</main>";
+
+      initSpiderWeb();
+    }
+
+    function leafListItemHTML(hrefParts, title, blurb) {
+      return (
+        '<li>' +
+        '<a onclick="navigate(\'/' + hrefParts.join("/") + '\')" class="group flex items-baseline justify-between gap-6 py-6" style="cursor:pointer">' +
+        "<span>" +
+        '<span class="leaf-title">' + escapeHTML(title) + "</span>" +
+        '<span class="leaf-blurb">' + escapeHTML(blurb) + "</span>" +
+        "</span>" +
+        '<span class="leaf-arrow">→</span>' +
+        "</a>" +
+        "</li>"
+      );
+    }
+
+    function renderBranchPage(chain) {
+      var branch = chain[chain.length - 1];
+
+      document.title = branch.title + " — Rooban's Web";
+      updateMetaDescription(branch.blurb);
+      updateOGTitle(branch.title + " — Rooban's Web");
+      updateOGDescription(branch.blurb);
+
+      var basePathParts = chain.map(function (b) { return b.slug; });
+
+      var leavesHTML = branch.leaves
+        .map(function (leaf) { return leafListItemHTML(basePathParts.concat(leaf.slug), leaf.title, leaf.blurb); })
+        .join("");
+
+      var children = branch.children || [];
+      var childHTML = children
+        .map(function (child) {
+          var totalPages = countPages(child);
+          return leafListItemHTML(basePathParts.concat(child.slug), child.title, (child.blurb || "") + " · " + totalPages + (totalPages === 1 ? " page" : " pages"));
+        })
+        .join("");
+
+      var breadcrumbHTML = breadcrumbFor(chain, null);
+
+      appEl.innerHTML =
+        '<main class="min-h-screen px-6 py-16">' +
+        '<div class="mx-auto max-w-2xl">' +
+        breadcrumbHTML +
+        '<p class="mt-12 branch-tagline">' + escapeHTML(branch.tagline || "") + "</p>" +
+        '<h1 class="mt-3 branch-title">' + escapeHTML(branch.title) + "</h1>" +
+        '<p class="mt-5 branch-blurb">' + escapeHTML(branch.blurb || "") + "</p>" +
+        (children.length > 0
+          ? '<p class="nearby-label mt-14">Sub-branches</p>' + '<ul class="mt-2 border-t border-border leaf-list">' + childHTML + "</ul>"
+          : "") +
+        (branch.leaves.length > 0
+          ? '<p class="nearby-label mt-14">Pages</p>' + '<ul class="mt-2 border-t border-border leaf-list">' + leavesHTML + "</ul>"
+          : "") +
+        "</div>" +
+        "</main>";
+    }
+
+    // Counts every leaf reachable under a branch, including nested children,
+    // just for the "N pages" summary shown on the parent branch page.
+    function countPages(branch) {
+      var n = branch.leaves.length;
+      (branch.children || []).forEach(function (c) { n += countPages(c); });
+      return n;
+    }
+
+    function breadcrumbFor(chain, leaf) {
+      var html = '<nav class="breadcrumb"><a onclick="navigate(\'/\')">Rooban</a>';
+      var pathSoFar = [];
+      chain.forEach(function (b) {
+        pathSoFar.push(b.slug);
+        html += '<span class="sep">/</span><a onclick="navigate(\'/' + pathSoFar.join("/") + '\')">' + escapeHTML(b.title) + "</a>";
+      });
+      html += "</nav>";
+      return html;
+    }
+
+    var THEME_DOODLES = {
+      fun: ['sparkle', 'star', 'sun', 'thinheart'],
+      sunset: ['sun', 'sparkle', 'filledstar'],
+      ocean: ['moon', 'sparkle', 'star'],
+      neon: ['sparkle', 'filledstar', 'star', 'sun'],
+      doodle: ['thinheart', 'star', 'sun', 'moon', 'sparkle'],
+      editorial: ['moon', 'arrow'],
+      blueprint: ['star', 'sparkle'],
+      terminal: ['sparkle'],
+      serious: ['moon'],
+    };
+
+    function renderLeafPage(chain, leaf) {
+      var branch = chain[chain.length - 1];
+      var siblings = branch.leaves.filter(function (l) { return l.slug !== leaf.slug; });
+      var basePathParts = chain.map(function (b) { return b.slug; });
+
+      document.title = leaf.title + " · " + branch.title + " — Rooban's Web";
+      updateMetaDescription(leaf.blurb);
+      updateOGTitle(leaf.title + " · " + branch.title + " — Rooban's Web");
+      updateOGDescription(leaf.blurb);
+
+      var bodyHTML = leaf.body
+        .map(function (para) {
+          if (isHTMLBlock(para)) return '<div class="leaf-html-block">' + para + "</div>";
+          return '<p class="font-body text-base leading-8 text-muted-foreground">' + escapeHTML(para) + "</p>";
+        })
+        .join("");
+
+      var siblingsHTML = siblings
+        .map(function (s) {
+          return '<a onclick="navigate(\'/' + basePathParts.concat(s.slug).join("/") + '\')" class="nearby-pill">' + escapeHTML(s.title) + "</a>";
+        })
+        .join("");
+
+      var linkedNotes = (leaf.links || [])
+        .map(resolveLinkPath)
+        .filter(Boolean);
+      var linkedHTML = linkedNotes
+        .map(function (res) {
+          return '<a onclick="navigate(\'' + hrefForChain(res.chain, res.leaf) + '\')" class="nearby-pill">' + escapeHTML(res.leaf.title) + "</a>";
+        })
+        .join("");
+
+      var theme = leaf.theme || "default";
+      var doodleHTML = "";
+      var doodleNames = THEME_DOODLES[theme] || [];
+      if (doodleNames.length && window.THEME_DOODLE_SVGS) {
+        doodleHTML = '<div class="theme-doodle-row" aria-hidden="true">' +
+          doodleNames.map(function (n) {
+            return window.THEME_DOODLE_SVGS[n] ? '<span class="theme-doodle-icon">' + window.THEME_DOODLE_SVGS[n] + '</span>' : '';
+          }).join('') +
+          '</div>';
+      }
+
+      var themeBadge = {
+        fun: 'PLAYFUL', sunset: 'SUNSET', ocean: 'OCEAN', neon: 'NEON',
+        doodle: 'DOODLE', editorial: 'EDITORIAL', blueprint: 'BLUEPRINT',
+        terminal: 'TERMINAL', serious: 'SERIOUS', default: 'DEFAULT'
+      }[theme] || 'DEFAULT';
+      var themeBadgeHTML = '<span class="theme-badge">' + themeBadge + '</span>';
+
+      var breadcrumbHTML = breadcrumbFor(chain, leaf);
+
+      appEl.innerHTML =
+        '<main class="min-h-screen px-6 py-16 theme-' + theme + '">' +
+        '<div class="mx-auto max-w-2xl">' +
+        breadcrumbHTML +
+        doodleHTML +
+        themeBadgeHTML +
+        '<h1 class="mt-6 leaf-page-title">' + escapeHTML(leaf.title) + "</h1>" +
+        '<p class="mt-4 leaf-page-blurb">' + escapeHTML(leaf.blurb) + "</p>" +
+        '<div class="mt-10 space-y-6 leaf-body">' + bodyHTML + "</div>" +
+        (siblings.length > 0
+          ? '<p class="mt-16 nearby-label">Nearby strands</p>' + '<div class="mt-4 nearby-pills">' + siblingsHTML + "</div>"
+          : "") +
+        (linkedNotes.length > 0
+          ? '<p class="mt-10 nearby-label">Linked notes</p>' + '<div class="mt-4 nearby-pills">' + linkedHTML + "</div>"
+          : "") +
+        "</div>" +
+        "</main>";
+    }
+
+    function renderNotFoundPage() {
+      document.title = "404 — Rooban";
+      updateMetaDescription("Page not found");
+      updateOGTitle("404 — Rooban");
+
+      appEl.innerHTML =
+        '<div class="not-found-page">' +
+        '<div class="not-found-card">' +
+        "<h1>404</h1>" +
+        "<h2>Page not found</h2>" +
+        "<p>The page you're looking for doesn't exist or has been moved.</p>" +
+        '<div class="mt-6">' +
+        '<button class="btn btn-primary" onclick="navigate(\'/\')">Go home</button>' +
+        "</div>" +
+        "</div>" +
+        "</div>";
+    }
+
+    function renderErrorPage() {
+      document.title = "This page didn't load";
+      appEl.innerHTML =
+        '<div class="error-page">' +
+        '<div class="error-card">' +
+        "<h1>This page didn't load</h1>" +
+        "<p>Something went wrong on our end. You can try refreshing or head back home.</p>" +
+        '<div class="error-actions">' +
+        '<button class="btn btn-primary" onclick="location.reload()">Try again</button>' +
+        '<a class="btn btn-outline" onclick="navigate(\'/\')" style="cursor:pointer">Go home</a>' +
+        "</div>" +
+        "</div>" +
+        "</div>";
+    }
+
+    function isHTMLBlock(str) {
+      return /^\s*</.test(str || "");
+    }
+
+    // =========================================================================
+    // SPIDER WEB — force-directed graph, Obsidian-graph style
+    // =========================================================================
+    // Real physics: nodes repel each other, links pull like springs, every
+    // node is individually draggable and reacts to the rest of the graph.
+    // Background drag pans, mouse wheel zooms, hovering a node highlights
+    // it and everything directly connected to it (tree links + cross-links).
+
+    var SIZE = 720;
+    var C = SIZE / 2;
+    var NODE_R = { center: 40, branch: 11, leaf: 5 };
+    var LINK_LEN = { center: 150, branch: 85 };
+
+    function buildSpiderWebSVG() {
+      return (
+        '<div class="spider-web-container">' +
+        '<svg viewBox="0 0 ' + SIZE + ' ' + SIZE + '" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs>' +
+        '<filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur2" />' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
+        '</filter>' +
+        '<filter id="strongGlow" x="-300%" y="-300%" width="700%" height="700%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur2" />' +
+        '<feMerge><feMergeNode in="blur2" /><feMergeNode in="blur1" /><feMergeNode in="SourceGraphic" /></feMerge>' +
+        '</filter>' +
+        '<radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">' +
+        '<stop offset="0%" stop-color="var(--accent-warm)" stop-opacity="0.4" />' +
+        '<stop offset="60%" stop-color="var(--accent-warm)" stop-opacity="0.1" />' +
+        '<stop offset="100%" stop-color="var(--accent-warm)" stop-opacity="0" />' +
+        '</radialGradient>' +
+        '</defs>' +
+        '<circle cx="' + C + '" cy="' + C + '" r="' + (SIZE * 0.42) + '" fill="url(#centerGlow)" />' +
+        '<g id="links-layer"></g>' +
+        '<g id="nodes-layer"></g>' +
+        '</svg>' +
+        '</div>'
+      );
+    }
+
+    function svgEl(tag, attrs) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (var k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
+    // Builds the node/edge graph from `branches`, including sub-branches and
+    // cross-links (leaf.links). Returns nodes, tree links, cross links, and
+    // an adjacency map used for hover highlighting.
+    function buildGraph() {
+      var nodes = [];
+      var links = [];       // tree edges: center-branch, branch-sub, branch/sub-leaf
+      var crossLinks = [];  // extra edges from leaf.links
+      var pathToNode = {};  // "branch/slug" or "branch/sub/slug" -> node
+
+      var center = { type: 'center', r: NODE_R.center, label: CENTER.name, x: C, y: C, vx: 0, vy: 0 };
+      nodes.push(center);
+
+      function scatterNear(anchor, spread) {
+        var a = Math.random() * Math.PI * 2;
+        var d = spread * 0.4 + Math.random() * spread;
+        return { x: anchor.x + Math.cos(a) * d, y: anchor.y + Math.sin(a) * d };
+      }
+
+      function addLeaf(anchorNode, leaf, pathParts, linkLen) {
+        var p = scatterNear(anchorNode, linkLen * 0.8);
+        var node = {
+          type: 'leaf', r: NODE_R.leaf, label: leaf.title, leafRef: leaf, path: pathParts,
+          x: p.x, y: p.y, vx: 0, vy: 0
+        };
+        nodes.push(node);
+        links.push({ a: anchorNode, b: node, len: linkLen });
+        pathToNode[pathParts.join('/')] = node;
+        return node;
+      }
+
+      // Recursively walks the branch tree to any depth, adding a branch
+      // node + edge for each branch, a leaf node + edge for each leaf, and
+      // recursing into children with a slightly shorter link length and
+      // radius per level so deep nesting still reads as a hierarchy.
+      function addBranchNode(branch, anchorNode, pathParts, depth) {
+        var linkLen = Math.max(55, LINK_LEN.branch - depth * 12);
+        var r = Math.max(6, NODE_R.branch - depth * 1.6);
+        var p = scatterNear(anchorNode, linkLen);
+        var bNode = { type: 'branch', r: r, label: branch.title, slug: branch.slug, path: pathParts, x: p.x, y: p.y, vx: 0, vy: 0 };
+        nodes.push(bNode);
+        links.push({ a: anchorNode, b: bNode, len: depth === 0 ? LINK_LEN.center : linkLen });
+        pathToNode[pathParts.join('/')] = bNode;
+
+        branch.leaves.forEach(function (leaf) {
+          addLeaf(bNode, leaf, pathParts.concat(leaf.slug), Math.max(50, LINK_LEN.branch - depth * 8));
+        });
+
+        (branch.children || []).forEach(function (child) {
+          addBranchNode(child, bNode, pathParts.concat(child.slug), depth + 1);
+        });
+      }
+
+      branches.forEach(function (branch) {
+        addBranchNode(branch, center, [branch.slug], 0);
+      });
+
+      // Second pass: resolve cross-links now that every leaf node exists.
+      nodes.forEach(function (n) {
+        if (n.type !== 'leaf' || !n.leafRef || !n.leafRef.links) return;
+        n.leafRef.links.forEach(function (pathStr) {
+          var target = pathToNode[String(pathStr || '').split('/').filter(Boolean).join('/')];
+          if (target && target !== n) {
+            crossLinks.push({ a: n, b: target, len: 160 });
+          }
+        });
+      });
+
+      // Adjacency map for hover highlighting (undirected, tree + cross).
+      var adjacency = new Map();
+      function link(a, b) {
+        if (!adjacency.has(a)) adjacency.set(a, new Set());
+        if (!adjacency.has(b)) adjacency.set(b, new Set());
+        adjacency.get(a).add(b);
+        adjacency.get(b).add(a);
+      }
+      links.forEach(function (l) { link(l.a, l.b); });
+      crossLinks.forEach(function (l) { link(l.a, l.b); });
+
+      return { nodes: nodes, links: links, crossLinks: crossLinks, adjacency: adjacency };
+    }
+
+    function initSpiderWeb() {
+      var svg = document.querySelector('.spider-web-container svg');
+      var linksLayer = document.getElementById('links-layer');
+      var nodesLayer = document.getElementById('nodes-layer');
+      if (!svg || !linksLayer || !nodesLayer) return;
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var graph = buildGraph();
+      var nodes = graph.nodes;
+      var links = graph.links;
+      var crossLinks = graph.crossLinks;
+      var adjacency = graph.adjacency;
+      var allLinks = links.concat(crossLinks);
+
+      links.forEach(function (link) {
+        link.el = svgEl('line', {
+          x1: link.a.x, y1: link.a.y, x2: link.b.x, y2: link.b.y,
+          stroke: 'var(--silk-strong)',
+          'stroke-width': link.len === LINK_LEN.center ? 1.4 : 1,
+          'stroke-opacity': link.len === LINK_LEN.center ? 1 : 0.75
+        });
+        link.el.style.transition = 'opacity 150ms ease';
+        linksLayer.appendChild(link.el);
+      });
+
+      crossLinks.forEach(function (link) {
+        link.el = svgEl('line', {
+          x1: link.a.x, y1: link.a.y, x2: link.b.x, y2: link.b.y,
+          stroke: 'var(--accent-warm)', 'stroke-width': 1, 'stroke-dasharray': '3 4', 'stroke-opacity': 0.55
+        });
+        link.el.style.transition = 'opacity 150ms ease';
+        linksLayer.appendChild(link.el);
+      });
+
+      function href(node) { return '/' + node.path.join('/'); }
+
+      nodes.forEach(function (node) {
+        var g = svgEl('g', { style: 'cursor:pointer' });
+        g.style.transition = 'opacity 150ms ease';
+
+        if (node.type === 'center') {
+          node.glowEl = svgEl('circle', { r: node.r * 1.4, fill: 'var(--accent-warm)', opacity: 0.28, filter: 'url(#strongGlow)', class: 'node-glow' });
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--card)', stroke: 'var(--silk-strong)', filter: 'url(#softGlow)' });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: 5, fill: 'var(--foreground)', 'font-family': 'var(--font-display)', 'font-size': '20px', 'letter-spacing': '0.1em' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.glowEl); g.appendChild(node.circleEl); g.appendChild(node.textEl);
+        } else if (node.type === 'branch') {
+          node.glowEl = svgEl('circle', { r: node.r * 1.7, fill: 'var(--accent-warm)', opacity: 0.5, filter: 'url(#strongGlow)', class: 'node-glow' });
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--accent-warm)', filter: 'url(#softGlow)' });
+          node.ringEl = svgEl('circle', { r: node.r + 6, fill: 'none', stroke: 'var(--accent-warm)', 'stroke-width': 1, opacity: 0.4 });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: -(node.r + 14), fill: 'var(--foreground)', 'font-family': 'var(--font-display)', 'font-size': (17 - node.path.length) + 'px', 'letter-spacing': '0.14em', 'text-transform': 'uppercase' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.glowEl); g.appendChild(node.ringEl); g.appendChild(node.circleEl); g.appendChild(node.textEl);
+          g.addEventListener('pointerdown', function (e) { onNodeDown(e, node); });
+          g.addEventListener('pointerup', function () { onNodeUp(node, function () { navigate(href(node)); }); });
+        } else {
+          node.circleEl = svgEl('circle', { r: node.r, fill: 'var(--dew)', filter: 'url(#softGlow)' });
+          node.textEl = svgEl('text', { 'text-anchor': 'middle', dy: -(node.r + 8), fill: 'var(--muted-foreground)', 'font-family': 'var(--font-body)', 'font-size': '12px', 'letter-spacing': '0.02em' });
+          node.textEl.textContent = node.label;
+          g.appendChild(node.circleEl); g.appendChild(node.textEl);
+          g.addEventListener('pointerdown', function (e) { onNodeDown(e, node); });
+          g.addEventListener('pointerup', function () { onNodeUp(node, function () { navigate(href(node)); }); });
+        }
+
+        g.addEventListener('pointerenter', function () { onNodeHover(node); });
+        g.addEventListener('pointerleave', function () { onNodeUnhover(); });
+
+        node.groupEl = g;
+        nodesLayer.appendChild(g);
+      });
+
+      function place(n) { n.groupEl.setAttribute('transform', 'translate(' + n.x + ',' + n.y + ')'); }
+      function placeLinks() {
+        allLinks.forEach(function (l) {
+          l.el.setAttribute('x1', l.a.x); l.el.setAttribute('y1', l.a.y);
+          l.el.setAttribute('x2', l.b.x); l.el.setAttribute('y2', l.b.y);
+        });
+      }
+      nodes.forEach(place);
+      placeLinks();
+
+      // --- Hover highlighting (Obsidian-style: dim everything not connected) ---
+      var hoveredNode = null;
+      function onNodeHover(node) {
+        hoveredNode = node;
+        var neighbors = adjacency.get(node) || new Set();
+        nodes.forEach(function (n) {
+          n.groupEl.style.opacity = (n === node || neighbors.has(n)) ? '1' : '0.18';
+        });
+        allLinks.forEach(function (l) {
+          l.el.style.opacity = (l.a === node || l.b === node) ? '1' : '0.08';
+        });
+      }
+      function onNodeUnhover() {
+        hoveredNode = null;
+        nodes.forEach(function (n) { n.groupEl.style.opacity = '1'; });
+        allLinks.forEach(function (l) { l.el.style.opacity = ''; });
+      }
+
+      // --- Physics ---
+      var REPEL = 9000;
+      var SPRING = 0.05;
+      var CENTER_PULL = 0.002;
+      var DAMPING = 0.82;
+      var PAD = 20;
+      var dragNode = null;
+      var raf = 0;
+
+      function mass(n) { return n.r * (n.type === 'center' ? 3 : n.type === 'branch' ? 1.6 : 1); }
+
+      function step() {
+        var ke = 0;
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          if (n === dragNode) continue;
+          var ax = 0, ay = 0;
+          for (var j = 0; j < nodes.length; j++) {
+            if (i === j) continue;
+            var o = nodes[j];
+            var dx = n.x - o.x, dy = n.y - o.y;
+            var distSq = dx * dx + dy * dy || 0.01;
+            var dist = Math.sqrt(distSq);
+            var f = REPEL / distSq;
+            ax += (dx / dist) * f;
+            ay += (dy / dist) * f;
+          }
+          ax += (C - n.x) * CENTER_PULL;
+          ay += (C - n.y) * CENTER_PULL;
+          var m = mass(n);
+          n.vx = (n.vx + ax / m) * DAMPING;
+          n.vy = (n.vy + ay / m) * DAMPING;
+        }
+
+        allLinks.forEach(function (l) {
+          var dx = l.b.x - l.a.x, dy = l.b.y - l.a.y;
+          var dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+          var force = (dist - l.len) * SPRING;
+          var ux = dx / dist, uy = dy / dist;
+          if (l.a !== dragNode) { l.a.vx += (ux * force) / mass(l.a); l.a.vy += (uy * force) / mass(l.a); }
+          if (l.b !== dragNode) { l.b.vx -= (ux * force) / mass(l.b); l.b.vy -= (uy * force) / mass(l.b); }
+        });
+
+        nodes.forEach(function (n) {
+          if (n === dragNode) return;
+          n.x += n.vx; n.y += n.vy;
+          n.x = Math.max(PAD + n.r, Math.min(SIZE - PAD - n.r, n.x));
+          n.y = Math.max(PAD + n.r, Math.min(SIZE - PAD - n.r, n.y));
+          ke += n.vx * n.vx + n.vy * n.vy;
+          place(n);
+        });
+        placeLinks();
+
+        if (ke < 0.02 && !dragNode) { raf = 0; return; }
+        raf = requestAnimationFrame(step);
+      }
+
+      function wake() { if (!raf) raf = requestAnimationFrame(step); }
+      if (!reduceMotion) wake();
+
+      // --- Per-node dragging ---
+      function toSvgPoint(evt) {
+        var pt = svg.createSVGPoint();
+        pt.x = evt.clientX; pt.y = evt.clientY;
+        var ctm = svg.getScreenCTM();
+        if (!ctm) return { x: 0, y: 0 };
+        var p = pt.matrixTransform(ctm.inverse());
+        return { x: p.x, y: p.y };
+      }
+
+      var moveDist = 0;
+
+      function onNodeDown(e, node) {
+        e.stopPropagation();
+        dragNode = node;
+        moveDist = 0;
+        node.vx = 0; node.vy = 0;
+        try { e.target.setPointerCapture(e.pointerId); } catch (err) {}
+        wake();
+      }
+
+      function onGlobalMove(e) {
+        if (!dragNode) return;
+        var p = toSvgPoint(e);
+        moveDist += Math.abs(p.x - dragNode.x) + Math.abs(p.y - dragNode.y);
+        dragNode.x = Math.max(PAD + dragNode.r, Math.min(SIZE - PAD - dragNode.r, p.x));
+        dragNode.y = Math.max(PAD + dragNode.r, Math.min(SIZE - PAD - dragNode.r, p.y));
+        place(dragNode);
+        placeLinks();
+        e.preventDefault();
+      }
+
+      function onNodeUp(node, onClick) {
+        if (dragNode === node && moveDist < 6) onClick();
+      }
+
+      function onGlobalUp() { dragNode = null; wake(); }
+
+      window.addEventListener('pointermove', onGlobalMove, { passive: false });
+      window.addEventListener('pointerup', onGlobalUp);
+      window.addEventListener('pointercancel', onGlobalUp);
+
+      // --- Pan (drag empty background) & zoom (mouse wheel) ---
+      var view = { x: 0, y: 0, w: SIZE, h: SIZE };
+      function applyView() { svg.setAttribute('viewBox', view.x + ' ' + view.y + ' ' + view.w + ' ' + view.h); }
+
+      var panning = false, panStartX = 0, panStartY = 0, viewStartX = 0, viewStartY = 0;
+
+      function onBgDown(e) {
+        if (dragNode) return;
+        panning = true;
+        panStartX = e.clientX; panStartY = e.clientY;
+        viewStartX = view.x; viewStartY = view.y;
+      }
+      function onBgMove(e) {
+        if (!panning) return;
+        var scale = view.w / (svg.getBoundingClientRect().width || SIZE);
+        view.x = viewStartX - (e.clientX - panStartX) * scale;
+        view.y = viewStartY - (e.clientY - panStartY) * scale;
+        applyView();
+      }
+      function onBgUp() { panning = false; }
+
+      function onWheel(e) {
+        if (!(e.ctrlKey || e.metaKey)) return; // plain scroll passes through to the page
+        e.preventDefault();
+        var p = toSvgPoint(e);
+        var scaleFactor = e.deltaY > 0 ? 1.1 : 0.9;
+        var newW = Math.max(240, Math.min(SIZE * 2.2, view.w * scaleFactor));
+        view.x = p.x - (p.x - view.x) * (newW / view.w);
+        view.y = p.y - (p.y - view.y) * (newW / view.h);
+        view.w = newW; view.h = newW;
+        applyView();
+      }
+
+      svg.addEventListener('pointerdown', onBgDown);
+      window.addEventListener('pointermove', onBgMove);
+      window.addEventListener('pointerup', onBgUp);
+      svg.addEventListener('wheel', onWheel, { passive: false });
+
+      svg._spiderWebCleanup = function () {
+        window.removeEventListener('pointermove', onGlobalMove);
+        window.removeEventListener('pointerup', onGlobalUp);
+        window.removeEventListener('pointercancel', onGlobalUp);
+        window.removeEventListener('pointermove', onBgMove);
+        window.removeEventListener('pointerup', onBgUp);
+        svg.removeEventListener('wheel', onWheel);
+        if (raf) cancelAnimationFrame(raf);
+      };
+    }
+
+    function cleanupSpiderWeb() {
+      var svg = document.querySelector('.spider-web-container svg');
+      if (svg && svg._spiderWebCleanup) svg._spiderWebCleanup();
+    }
+
+    // =========================================================================
+    // META TAG HELPERS
+    // =========================================================================
+
+    function updateMetaDescription(desc) {
+      var meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", desc);
+    }
+
+    function updateOGTitle(title) {
+      var meta = document.querySelector('meta[property="og:title"]');
+      if (meta) meta.setAttribute("content", title);
+    }
+
+    function updateOGDescription(desc) {
+      var meta = document.querySelector('meta[property="og:description"]');
+      if (meta) meta.setAttribute("content", desc);
+    }
+
+    // =========================================================================
+    // UTILITY
+    // =========================================================================
+
+    function escapeHTML(str) {
+      var div = document.createElement("div");
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
+    // =========================================================================
+    // ROUTER DISPATCH
+    // =========================================================================
+
+    function route() {
+      cleanupSpiderWeb();
+      var parsed = parseHash();
+      var parts = parsed.parts;
+
+      try {
+        if (parts.length === 0) {
+          renderHomePage();
+        } else if (parts.length === 1 && parts[0] === "admin") {
+          window.location.href = "admin/";
+        } else {
+          var res = resolvePath(parts);
+          if (!res) { renderNotFoundPage(); return; }
+          if (res.kind === "branch") renderBranchPage(res.chain);
+          else if (res.kind === "leaf") renderLeafPage(res.chain, res.leaf);
+        }
+      } catch (e) {
+        console.error(e);
+        renderErrorPage();
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+    route();
+
+    if (!window.location.hash) window.location.hash = "#/";
+
+  </script>
+</body></html>
