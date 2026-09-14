@@ -419,7 +419,7 @@
       doodle: ['thinheart', 'star', 'sun', 'moon', 'sparkle'],
       editorial: ['moon', 'arrow'],
       blueprint: ['star', 'sparkle'],
-      terminal: ['sparkle', "thinheart"],
+      terminal: ['sparkle', "thinheart", "moon"],
       serious: ['moon'],
     };
 
@@ -979,6 +979,128 @@
 
 <script>
 (function () {
+
+    function startDoodleRoaming() {
+
+        const doodles = document.querySelectorAll(
+            '.theme-doodle-icon'
+        );
+
+        if (!doodles.length) {
+            return;
+        }
+
+        doodles.forEach(function (doodle) {
+            roamDoodle(doodle);
+        });
+    }
+
+
+    function roamDoodle(doodle) {
+
+        const padding = 20;
+
+        const maxX =
+            Math.max(
+                padding,
+                window.innerWidth -
+                doodle.offsetWidth -
+                padding
+            );
+
+        const maxY =
+            Math.max(
+                padding,
+                window.innerHeight -
+                doodle.offsetHeight -
+                padding
+            );
+
+
+        /* Random destination */
+        const x =
+            padding +
+            Math.random() * (maxX - padding);
+
+        const y =
+            padding +
+            Math.random() * (maxY - padding);
+
+
+        /* Random rotation */
+        const rotation =
+            Math.random() * 120 - 60;
+
+
+        /* Random movement speed */
+        const duration =
+            2000 + Math.random() * 4000;
+
+
+        /* Apply random duration */
+        doodle.style.transition =
+            'transform ' +
+            duration +
+            'ms cubic-bezier(.4, 0, .2, 1)';
+
+
+        /* Move */
+        doodle.style.transform =
+            'translate(' +
+            x +
+            'px, ' +
+            y +
+            'px) rotate(' +
+            rotation +
+            'deg)';
+
+
+        /* Pick another destination */
+        setTimeout(function () {
+            roamDoodle(doodle);
+        }, duration);
+    }
+
+
+    /* Start after page loads */
+    if (document.readyState === 'loading') {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            startDoodleRoaming
+        );
+
+    } else {
+
+        startDoodleRoaming();
+
+    }
+
+
+    /* Recalculate when browser is resized */
+    window.addEventListener(
+        'resize',
+        function () {
+
+            document
+                .querySelectorAll('.theme-doodle-icon')
+                .forEach(function (doodle) {
+
+                    roamDoodle(doodle);
+
+                });
+
+        }
+    );
+
+})();
+</script>
+
+
+<!-- Code Added -->
+
+<script>
+(function () {
     function startDoodleRoaming() {
         const doodles = document.querySelectorAll('.theme-doodle-icon');
 
@@ -1025,5 +1147,7 @@
     }
 })();
 </script>
+
+<!-- Code added -->
 
 </body></html>
